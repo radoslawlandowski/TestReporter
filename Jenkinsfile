@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git url 'https://github.com/radoslawlandowski/TestReporter.git'
+                git 'https://github.com/radoslawlandowski/TestReporter.git'
             }
         }
     }
