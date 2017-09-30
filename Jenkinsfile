@@ -14,9 +14,7 @@ pipeline {
         }
         stage('Install') {
             steps {
-                dir('testreporter') {
-                    sh 'mvn install'
-                }
+                sh 'mvn install'
             }
         }
     }
