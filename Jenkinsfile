@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Checkout') {
             steps {
-                git 'https://github.com/radoslawlandowski/TestReporter.git'
+                git branch: 'CreateXMLManagmentServices', url: 'https://github.com/radoslawlandowski/TestReporter.git'
             }
         }
         stage('Install') {
