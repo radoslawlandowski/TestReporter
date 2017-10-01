@@ -1,6 +1,9 @@
 package testreporter.core.FileManager;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
@@ -11,9 +14,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FileManagerTest {
 
+    private File testEnvironment;
+
+    @Before
+    public void Before() {
+        testEnvironment = new File(new File(".").getAbsolutePath() + "/testEnv");
+        testEnvironment.mkdir();
+    }
+
     @Test
     public void SavingFileShouldExistAndHaveProperContent() {
-        String path = "/home/radek";
+        String path = testEnvironment.getAbsolutePath();
         String fileName = "radek.txt";
         String fileContent = "some test data for my input stream";
 
@@ -41,7 +52,7 @@ public class FileManagerTest {
 
     @Test
     public void ReadingFileShouldGiveProperContent() {
-        String path = "/home/radek";
+        String path = testEnvironment.getAbsolutePath();
         String fileName = "radek.txt";
         String content = "test";
 
@@ -58,5 +69,14 @@ public class FileManagerTest {
 
         String data = new String(stream.toString());
         assertThat(data).contains(content);
+    }
+
+    @After
+    public void After() {
+        try {
+            FileUtils.deleteDirectory(testEnvironment);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
