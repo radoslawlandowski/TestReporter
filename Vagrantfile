@@ -9,5 +9,6 @@ Vagrant.configure("2") do |config|
     end
 
   config.vm.provision :shell, path: "./vagrant-scripts/install-java.sh"
+  config.vm.provision :shell, path: "./vagrant-scripts/install-maven.sh"
 
 end
