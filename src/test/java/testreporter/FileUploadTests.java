@@ -7,6 +7,7 @@ import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.glassfish.jersey.client.ClientResponse;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -29,15 +30,16 @@ public class FileUploadTests {
             new DropwizardAppRule<TestReporterConfiguration>(TestReporterApplication.class, ResourceHelpers.resourceFilePath("config.yml"));
 
     @Test
-    public void loginHandlerRedirectsAfterPost() throws IOException {
+    public void UploadedFileIsDownloadable() throws IOException {
 
         JerseyClientConfiguration configuration = new JerseyClientConfiguration();
         configuration.setChunkedEncodingEnabled(false);
 
         Client client = new JerseyClientBuilder(RULE.getEnvironment()).using(configuration).build("test client");
 
-        final FormDataMultiPart multiPart = new FormDataMultiPart()
-                .field("file", new File("/home/radek/Documents/Repositories/TestReporter/src/test/resources/test-results/nunit-3-test-result.xml"), MediaType.APPLICATION_XML_TYPE);
+        FileDataBodyPart filePart = new FileDataBodyPart("file", new File(ResourceHelpers.resourceFilePath("test-results/nunit-3-test-result.xml")));
+        FormDataMultiPart multiPart = new FormDataMultiPart();
+        multiPart.bodyPart(filePart);
 
         Response response = client.target(
                 String.format("http://localhost:%d/file", RULE.getLocalPort()))
@@ -46,5 +48,7 @@ public class FileUploadTests {
                 .post(Entity.entity(multiPart, multiPart.getMediaType()));
 
         assertThat(response.getStatus()).isEqualTo(200);
+
+        
     }
 }
