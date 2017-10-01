@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Checkout') {
             steps {
-                git branch: 'CreateXMLManagmentServices', url: 'https://github.com/radoslawlandowski/TestReporter.git'
+                git branch: "${env.BRANCH_NAME}", url: 'https://github.com/radoslawlandowski/TestReporter.git'
             }
         }
         stage('Install') {
