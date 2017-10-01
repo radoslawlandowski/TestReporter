@@ -6,6 +6,6 @@ logging:
 server:
   applicationConnectors:
     - type: http
-      port: 1112
+      port: 1111
 
-resultsFolder: "/TestReporter"
+resultsFolder: "/TestReporter/results"
