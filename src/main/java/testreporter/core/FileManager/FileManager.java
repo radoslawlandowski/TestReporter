@@ -14,6 +14,14 @@ public class FileManager implements IFileManager {
 
     public FileManager(String basePath) {
         this.basePath = Paths.get(basePath);
+
+        if(!Files.exists(this.basePath)) {
+            try {
+                Files.createDirectory(this.basePath.toAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -38,6 +46,8 @@ public class FileManager implements IFileManager {
             Path filePath = Paths.get(this.basePath.toString(), name);
 
             Files.copy(filePath, stream);
+
+            stream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
