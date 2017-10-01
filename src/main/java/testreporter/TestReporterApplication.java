@@ -3,6 +3,9 @@ package testreporter;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import testreporter.core.FileManager.FileManager;
+import testreporter.resources.FileResource;
 
 public class TestReporterApplication extends Application<TestReporterConfiguration> {
 
@@ -23,7 +26,16 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
     @Override
     public void run(final TestReporterConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+
+        environment.jersey().register(MultiPartFeature.class);
+
+        environment.jersey().register(
+                new FileResource(
+                        new FileManager(
+                                configuration.getResultsFolder()
+                        )
+                )
+        );
     }
 
 }
