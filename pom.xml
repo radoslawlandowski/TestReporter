@@ -41,6 +41,22 @@
             <artifactId>dropwizard-core</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.dropwizard/dropwizard-testing -->
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-testing</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.dropwizard/dropwizard-client -->
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
         <dependency>
             <groupId>org.assertj</groupId>

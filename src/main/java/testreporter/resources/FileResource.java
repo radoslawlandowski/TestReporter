@@ -45,7 +45,7 @@ public class FileResource {
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 
-        fileManager.save(uploadedInputStream, fileDetail.getFileName());
+        fileManager.save(uploadedInputStream, "ASD.txt");
 
         return Response.ok().build();
     }
