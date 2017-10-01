@@ -1,0 +1,68 @@
+{
+	"variables": [],
+	"info": {
+		"name": "TestReporter",
+		"_postman_id": "f975842f-9e30-6fb3-4160-cd4e91c43764",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post file",
+			"request": {
+				"url": "{{webapiHost}}:{{webapiPort}}/file",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "myfile_(5)_123.xml"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get file",
+			"request": {
+				"url": {
+					"raw": "{{webapiHost}}:{{webapiPort}}/file?name=myfile_(5)_123.xml",
+					"host": [
+						"{{webapiHost}}"
+					],
+					"port": "{{webapiPort}}",
+					"path": [
+						"file"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "myfile_(5)_123.xml",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

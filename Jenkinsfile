@@ -9,14 +9,12 @@ pipeline {
         }
         stage('Checkout') {
             steps {
-                git 'https://github.com/radoslawlandowski/TestReporter.git'
+                git branch: "${env.BRANCH_NAME}", url: 'https://github.com/radoslawlandowski/TestReporter.git'
             }
         }
         stage('Install') {
             steps {
-                dir('testreporter') {
-                    sh 'mvn install'
-                }
+                sh 'mvn install'
             }
         }
     }
