@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FileUploadTests {
+public class FileUploadTest {
 
     @ClassRule
     public static final DropwizardAppRule<TestReporterConfiguration> RULE =
