@@ -1,31 +1,59 @@
 package testreporter.core.models;
 
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.List;
 
 @XmlRootElement(name="test-suite")
-public class TestSuite {
+@Entity
+@Table(name = "TestSuite")
+public class TestSuite implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    int internalId;
+    @Column
     String type;
+    @Column
     int id;
+    @Column
     String name;
+    @Column
     String fullname;
+    @Column
     String testcasecount;
+    @Column
     String result;
+    @Column
     String time;
+    @Column
     int total;
+    @Column
     int passed;
+    @Column
     int failed;
+    @Column
     int inconclusive;
+    @Column
     int skipped;
+    @Column
     int asserts;
+
+    @OneToMany(targetEntity = Property.class, cascade = CascadeType.ALL)
     List<Property> properties;
+
+    @OneToOne(targetEntity = Failure.class, cascade = CascadeType.ALL)
     Failure failure;
+
+    @OneToMany(targetEntity = TestCase.class, cascade = CascadeType.ALL)
     List<TestCase> testCases;
+
+    @OneToMany(targetEntity = TestSuite.class, cascade = CascadeType.ALL)
     List<TestSuite> testSuites;
 
     @XmlAttribute(name = "type")
