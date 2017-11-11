@@ -5,7 +5,6 @@ import io.dropwizard.hibernate.UnitOfWork;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import testreporter.client.DAO.TestRunDao;
-import testreporter.core.FileManager.IFileManager;
 import testreporter.core.IXmlDeserializer;
 import testreporter.core.TestRunDeserializer;
 import testreporter.core.models.TestRun;
@@ -13,14 +12,10 @@ import testreporter.core.models.TestRun;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 import javax.xml.bind.JAXBException;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/file")
 public class FileResource {

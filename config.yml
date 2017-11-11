@@ -8,8 +8,6 @@ server:
     - type: http
       port: 1111
 
-resultsFolder: "/TestReporter/results"
-
 database:
   # the name of your JDBC driver
   driverClass: org.postgresql.Driver
@@ -21,7 +19,7 @@ database:
   password: postgres
 
   # the JDBC URL
-  url: jdbc:postgresql://localhost/test-reporter
+  url: jdbc:postgresql://localhost/testreporter
 
   # any properties specific to your JDBC driver:
   properties:

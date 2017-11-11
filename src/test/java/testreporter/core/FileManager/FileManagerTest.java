@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -12,6 +13,7 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore
 public class FileManagerTest {
 
     private File testEnvironment;
@@ -22,6 +24,7 @@ public class FileManagerTest {
         testEnvironment.mkdir();
     }
 
+    @Ignore
     @Test
     public void SavingFileShouldExistAndHaveProperContent() {
         String path = testEnvironment.getAbsolutePath();
@@ -50,6 +53,7 @@ public class FileManagerTest {
         assertThat(content).contains(fileContent);
     }
 
+    @Ignore
     @Test
     public void ReadingFileShouldGiveProperContent() {
         String path = testEnvironment.getAbsolutePath();

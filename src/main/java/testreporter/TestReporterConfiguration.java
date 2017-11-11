@@ -14,9 +14,6 @@ public class TestReporterConfiguration extends Configuration {
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
 
-    @NotEmpty
-    private String resultsFolder;
-
     @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
         return database;
@@ -27,13 +24,4 @@ public class TestReporterConfiguration extends Configuration {
         this.database = database;
     }
 
-    @JsonProperty
-    public String getResultsFolder() {
-        return resultsFolder;
-    }
-
-    @JsonProperty
-    public void setResultsFolder(String resultsFolder) {
-        this.resultsFolder = resultsFolder;
-    }
 }
