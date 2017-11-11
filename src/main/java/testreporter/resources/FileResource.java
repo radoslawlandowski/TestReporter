@@ -52,13 +52,8 @@ public class FileResource {
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException, JAXBException {
 
-        String xmlContent;
-        try (BufferedReader buffer = new BufferedReader(new InputStreamReader(uploadedInputStream))) {
-            xmlContent = buffer.lines().collect(Collectors.joining("\n"));
-        }
-
         IXmlDeserializer des = new TestRunDeserializer();
-        TestRun result = (TestRun)des.deserialize(xmlContent);
+        TestRun result = (TestRun)des.deserialize(uploadedInputStream);
 
         return Response.ok().build();
     }
