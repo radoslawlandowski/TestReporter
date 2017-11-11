@@ -1,27 +1,61 @@
 package testreporter.core.models;
 
 
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
+@Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "TestRun.findAll",
+                query = "from TestRun"
+        )
+})
 @XmlRootElement(name="test-run")
-public class TestRun {
+@Table(name = "TestRun")
+public class TestRun implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    int internalId;
+
+    @Column
     int id;
+    @Column
     String name;
+    @Column
     String fullname;
+    @Column
     String testcasecount;
+    @Column
     String result;
+    @Column
     String time;
+    @Column
     int total;
+    @Column
     int passed;
+    @Column
     int failed;
+    @Column
     int inconclusive;
+    @Column
     int skipped;
+    @Column
     int asserts;
+    @Column
     String runDate;
+    @Column
     String startTime;
+
+    @OneToOne(targetEntity=TestSuite.class, cascade = CascadeType.ALL)
     TestSuite testSuite;
 
     @XmlAttribute(name = "id")

@@ -1,5 +1,6 @@
 package testreporter.core.models;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -7,15 +8,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @XmlRootElement(name="test-case")
+@Table(name = "TestCase")
+@Entity
 public class TestCase {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    int internalId;
+
+    @Column
     int id;
+    @Column
     String name;
+    @Column
     String fullname;
+    @Column
     String result;
+    @Column
     String time;
+    @Column
     int asserts;
+
+    @OneToMany(targetEntity = Property.class, cascade = CascadeType.ALL)
     List<Property> properties;
+
+    @OneToOne(targetEntity = Failure.class, cascade = CascadeType.ALL)
     Failure failure;
 
     @XmlAttribute(name = "id")
