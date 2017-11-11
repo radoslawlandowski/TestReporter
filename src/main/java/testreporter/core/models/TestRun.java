@@ -1,7 +1,5 @@
 package testreporter.core.models;
 
-
-import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -16,7 +14,11 @@ import java.io.Serializable;
         @NamedQuery(
                 name = "TestRun.findAll",
                 query = "from TestRun"
-        )
+        ),
+        @NamedQuery(
+        name = "TestRun.findByGroupName",
+        query = "from TestRun tr where tr.testGroup.name = :testGroupName"
+    )
 })
 @XmlRootElement(name="test-run")
 @Table(name = "TestRun")
@@ -25,7 +27,6 @@ public class TestRun implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     int internalId;
-
     @Column
     int id;
     @Column
@@ -54,6 +55,9 @@ public class TestRun implements Serializable {
     String runDate;
     @Column
     String startTime;
+
+    @ManyToOne(targetEntity = TestGroup.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    TestGroup testGroup;
 
     @OneToOne(targetEntity=TestSuite.class, cascade = CascadeType.ALL)
     TestSuite testSuite;
@@ -192,4 +196,13 @@ public class TestRun implements Serializable {
     public void setTestSuite(TestSuite testSuite) {
         this.testSuite = testSuite;
     }
+
+    public TestGroup getTestGroup() {
+        return testGroup;
+    }
+
+    public void setTestGroup(TestGroup testGroup) {
+        this.testGroup = testGroup;
+    }
+
 }

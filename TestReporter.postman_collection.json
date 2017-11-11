@@ -1,68 +1,197 @@
 {
-	"variables": [],
 	"info": {
 		"name": "TestReporter",
-		"_postman_id": "f975842f-9e30-6fb3-4160-cd4e91c43764",
+		"_postman_id": "2f1be34b-b9da-389b-480f-c75d0709c1c4",
 		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Post file",
-			"request": {
-				"url": "{{webapiHost}}:{{webapiPort}}/file",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "multipart/form-data",
-						"description": "",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"description": "",
-							"type": "file",
-							"src": "myfile_(5)_123.xml"
-						}
-					]
+			"name": "test group",
+			"description": "",
+			"item": [
+				{
+					"name": "Get test group by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-group?test-group-name={{testGroupName}}",
+							"host": [
+								"{{webapiHost}}"
+							],
+							"port": "{{webapiPort}}",
+							"path": [
+								"test-group"
+							],
+							"query": [
+								{
+									"key": "test-group-name",
+									"value": "{{testGroupName}}",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
 				},
-				"description": ""
-			},
-			"response": []
+				{
+					"name": "Get all test groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-group/all",
+							"host": [
+								"{{webapiHost}}"
+							],
+							"port": "{{webapiPort}}",
+							"path": [
+								"test-group",
+								"all"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create test group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{testGroupName}}\",\n\t\"description\": \"My test-group description!\"\n}"
+						},
+						"url": {
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-group",
+							"host": [
+								"{{webapiHost}}"
+							],
+							"port": "{{webapiPort}}",
+							"path": [
+								"test-group"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"name": "Get file",
-			"request": {
-				"url": {
-					"raw": "{{webapiHost}}:{{webapiPort}}/file?name=myfile_(5)_123.xml",
-					"host": [
-						"{{webapiHost}}"
-					],
-					"port": "{{webapiPort}}",
-					"path": [
-						"file"
-					],
-					"query": [
+			"name": "test run",
+			"description": "",
+			"item": [
+				{
+					"name": "Upload test run for test group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "nunit-3-test-result.xml"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-run?test-group-name={{testGroupName}}",
+							"host": [
+								"{{webapiHost}}"
+							],
+							"port": "{{webapiPort}}",
+							"path": [
+								"test-run"
+							],
+							"query": [
+								{
+									"key": "test-group-name",
+									"value": "{{testGroupName}}",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get test runs for test group",
+					"event": [
 						{
-							"key": "name",
-							"value": "myfile_(5)_123.xml",
-							"equals": true,
-							"description": ""
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"testGroupName\", \"asd\");"
+								]
+							}
 						}
 					],
-					"variable": []
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-run?test-group-name={{testGroupName}}",
+							"host": [
+								"{{webapiHost}}"
+							],
+							"port": "{{webapiPort}}",
+							"path": [
+								"test-run"
+							],
+							"query": [
+								{
+									"key": "test-group-name",
+									"value": "{{testGroupName}}",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
+				{
+					"name": "Get all test runs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-run/all",
+							"host": [
+								"{{webapiHost}}"
+							],
+							"port": "{{webapiPort}}",
+							"path": [
+								"test-run",
+								"all"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

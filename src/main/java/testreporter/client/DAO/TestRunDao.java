@@ -16,6 +16,10 @@ public class TestRunDao extends AbstractDAO<TestRun> {
         return list(namedQuery("TestRun.findAll"));
     }
 
+    public List<TestRun> findByGroupName(String testGroupName) {
+        return list(namedQuery("TestRun.findByGroupName").setParameter("testGroupName", testGroupName));
+    }
+
     public long create(TestRun testRun) {
         return persist(testRun).getId();
     }

@@ -6,10 +6,11 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import testreporter.client.DAO.TestGroupDao;
 import testreporter.client.DAO.TestRunDao;
-import testreporter.core.FileManager.FileManager;
 import testreporter.core.models.*;
-import testreporter.resources.FileResource;
+import testreporter.resources.TestRunResource;
+import testreporter.resources.TestGroupResource;
 
 public class TestReporterApplication extends Application<TestReporterConfiguration> {
 
@@ -17,7 +18,7 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
         new TestReporterApplication().run(args);
     }
 
-    private final HibernateBundle<TestReporterConfiguration> hibernate = new HibernateBundle<TestReporterConfiguration>(TestRun.class, TestSuite.class, TestCase.class, Property.class, Failure.class) {
+    private final HibernateBundle<TestReporterConfiguration> hibernate = new HibernateBundle<TestReporterConfiguration>(TestRun.class, TestSuite.class, TestCase.class, Property.class, Failure.class, TestGroup.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(TestReporterConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -40,8 +41,12 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
 
         environment.jersey().register(MultiPartFeature.class);
 
-        final TestRunDao dao = new TestRunDao(hibernate.getSessionFactory());
-        environment.jersey().register(new FileResource(dao));
+        final TestRunDao testRunDao = new TestRunDao(hibernate.getSessionFactory());
+        final TestGroupDao testGroupDao = new TestGroupDao(hibernate.getSessionFactory());
+
+        environment.jersey().register(new TestRunResource(testRunDao, testGroupDao));
+        environment.jersey().register(new TestGroupResource(testGroupDao));
+
     }
 
 }
