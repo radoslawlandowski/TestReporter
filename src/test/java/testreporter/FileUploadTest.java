@@ -9,6 +9,7 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Client;
@@ -45,6 +46,7 @@ public class FileUploadTest {
     }
 
     @Test
+    @Ignore
     public void UploadedFileIsDownloadable() throws IOException {
 
         FileDataBodyPart filePart = new FileDataBodyPart("file", resultsFile);

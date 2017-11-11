@@ -3,13 +3,20 @@ package testreporter.resources;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import testreporter.core.FileManager.IFileManager;
+import testreporter.core.IXmlDeserializer;
+import testreporter.core.TestRunDeserializer;
+import testreporter.core.models.TestRun;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
+import javax.xml.bind.JAXBException;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 @Path("/file")
 public class FileResource {
@@ -43,9 +50,10 @@ public class FileResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
-            @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
+            @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException, JAXBException {
 
-        fileManager.save(uploadedInputStream, fileDetail.getFileName());
+        IXmlDeserializer des = new TestRunDeserializer();
+        TestRun result = (TestRun)des.deserialize(uploadedInputStream);
 
         return Response.ok().build();
     }
