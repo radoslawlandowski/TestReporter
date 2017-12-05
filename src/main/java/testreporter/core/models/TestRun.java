@@ -1,7 +1,7 @@
 package testreporter.core.models;
 
-
-import org.hibernate.annotations.CollectionId;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -16,7 +16,11 @@ import java.io.Serializable;
         @NamedQuery(
                 name = "TestRun.findAll",
                 query = "from TestRun"
-        )
+        ),
+        @NamedQuery(
+        name = "TestRun.findByGroupName",
+        query = "from TestRun tr where tr.testGroup.name = :testGroupName"
+    )
 })
 @XmlRootElement(name="test-run")
 @Table(name = "TestRun")
@@ -24,9 +28,6 @@ public class TestRun implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    int internalId;
-
-    @Column
     int id;
     @Column
     String name;
@@ -55,10 +56,13 @@ public class TestRun implements Serializable {
     @Column
     String startTime;
 
+    @ManyToOne(targetEntity = TestGroup.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
+    TestGroup testGroup;
+
     @OneToOne(targetEntity=TestSuite.class, cascade = CascadeType.ALL)
     TestSuite testSuite;
 
-    @XmlAttribute(name = "id")
     public int getId() {
         return id;
     }
@@ -192,4 +196,13 @@ public class TestRun implements Serializable {
     public void setTestSuite(TestSuite testSuite) {
         this.testSuite = testSuite;
     }
+
+    public TestGroup getTestGroup() {
+        return testGroup;
+    }
+
+    public void setTestGroup(TestGroup testGroup) {
+        this.testGroup = testGroup;
+    }
+
 }
