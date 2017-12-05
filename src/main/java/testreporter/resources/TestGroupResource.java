@@ -43,8 +43,8 @@ public class TestGroupResource {
     @Timed
     @UnitOfWork
     @Path("/all")
-    public List<TestGroup> get() {
-        return testGroupDao.findAll();
+    public Response get() {
+        return Response.ok().entity(testGroupDao.findAll()).allow("OPTIONS").build();// testGroupDao.findAll();
     }
 
     @GET

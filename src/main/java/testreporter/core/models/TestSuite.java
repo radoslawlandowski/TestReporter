@@ -50,7 +50,7 @@ public class TestSuite implements Serializable {
     @OneToOne(targetEntity = Failure.class, cascade = CascadeType.ALL)
     Failure failure;
 
-    @OneToMany(targetEntity = TestCase.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = TestCase.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<TestCase> testCases;
 
     @OneToMany(targetEntity = TestSuite.class, cascade = CascadeType.ALL)

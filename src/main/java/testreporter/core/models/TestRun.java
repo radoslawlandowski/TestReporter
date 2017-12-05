@@ -1,5 +1,7 @@
 package testreporter.core.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -26,8 +28,6 @@ public class TestRun implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    int internalId;
-    @Column
     int id;
     @Column
     String name;
@@ -57,12 +57,12 @@ public class TestRun implements Serializable {
     String startTime;
 
     @ManyToOne(targetEntity = TestGroup.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     TestGroup testGroup;
 
     @OneToOne(targetEntity=TestSuite.class, cascade = CascadeType.ALL)
     TestSuite testSuite;
 
-    @XmlAttribute(name = "id")
     public int getId() {
         return id;
     }

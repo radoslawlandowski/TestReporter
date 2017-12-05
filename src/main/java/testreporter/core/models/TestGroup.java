@@ -1,6 +1,8 @@
 package testreporter.core.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +34,8 @@ public class TestGroup implements Serializable {
     String description;
 
     @Column
-    @OneToMany(targetEntity = TestRun.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = TestRun.class, mappedBy = "testGroup", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     List<TestRun> testRuns;
 
     public int getId() {
