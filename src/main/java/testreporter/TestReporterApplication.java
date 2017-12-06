@@ -6,9 +6,11 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import testreporter.client.DAO.AttachmentDao;
 import testreporter.client.DAO.TestGroupDao;
 import testreporter.client.DAO.TestRunDao;
 import testreporter.core.models.*;
+import testreporter.resources.AttachmentResource;
 import testreporter.resources.CORSFIlter;
 import testreporter.resources.TestRunResource;
 import testreporter.resources.TestGroupResource;
@@ -45,9 +47,11 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
 
         final TestRunDao testRunDao = new TestRunDao(hibernate.getSessionFactory());
         final TestGroupDao testGroupDao = new TestGroupDao(hibernate.getSessionFactory());
+        final AttachmentDao attachmentDao = new AttachmentDao(hibernate.getSessionFactory());
 
         environment.jersey().register(new TestRunResource(testRunDao, testGroupDao));
         environment.jersey().register(new TestGroupResource(testGroupDao));
+        environment.jersey().register(new AttachmentResource(attachmentDao));
     }
 
 }
