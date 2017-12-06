@@ -70,7 +70,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{testGroupName}}\",\n\t\"description\": \"My test-group description!\"\n}"
+							"raw": "{\n\t\"name\": \"{{testGroupName}}\",\n\t\"description\": \"{{testGroupName}} description\"\n}"
 						},
 						"url": {
 							"raw": "{{webapiHost}}:{{webapiPort}}/test-group",
@@ -135,17 +135,6 @@
 				},
 				{
 					"name": "Get test runs for test group",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.environment.set(\"testGroupName\", \"asd\");"
-								]
-							}
-						}
-					],
 					"request": {
 						"method": "GET",
 						"header": [],

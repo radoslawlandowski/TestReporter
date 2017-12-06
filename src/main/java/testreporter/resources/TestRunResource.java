@@ -10,11 +10,14 @@ import testreporter.core.IXmlDeserializer;
 import testreporter.core.TestRunDeserializer;
 import testreporter.core.models.TestGroup;
 import testreporter.core.models.TestRun;
+import testreporter.core.services.ITestRunParser;
+import testreporter.core.services.IZippedTestRunParser;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -36,13 +39,13 @@ public class TestRunResource {
     public Response uploadFile(
             @QueryParam("test-group-name") String testGroupName,
             @FormDataParam("file") InputStream uploadedInputStream,
-            @FormDataParam("file") FormDataContentDisposition fileDetail) throws JAXBException, WebApplicationException {
+            @FormDataParam("file") FormDataContentDisposition fileDetail) throws JAXBException, WebApplicationException, Exception {
 
         TestGroup testGroup = this.testGroupDao.findByGroupName(testGroupName);
 
-        IXmlDeserializer des = new TestRunDeserializer();
+        ITestRunParser parser = new IZippedTestRunParser(new TestRunDeserializer());
+        TestRun testRun = parser.parseResult(uploadedInputStream);
 
-        TestRun testRun = (TestRun)des.deserialize(uploadedInputStream);
         if(testGroup == null) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("The specified test group: " + testGroupName + " does not exist!")

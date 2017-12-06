@@ -1,5 +1,7 @@
 package testreporter.core.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @XmlRootElement(name="test-case")
-@Table(name = "TestCase")
+@Table(name = "testcase")
 @Entity
 public class TestCase {
 
@@ -34,6 +36,17 @@ public class TestCase {
 
     @OneToOne(targetEntity = Failure.class, cascade = CascadeType.ALL)
     Failure failure;
+
+    @OneToOne(targetEntity = ResultFile.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    ResultFile resultFile;
+
+    public ResultFile getResultFile() {
+        return resultFile;
+    }
+
+    public void setResultFile(ResultFile resultFile) {
+        this.resultFile = resultFile;
+    }
 
     @XmlAttribute(name = "id")
     public int getId() {

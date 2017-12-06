@@ -19,7 +19,7 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
         new TestReporterApplication().run(args);
     }
 
-    private final HibernateBundle<TestReporterConfiguration> hibernate = new HibernateBundle<TestReporterConfiguration>(TestRun.class, TestSuite.class, TestCase.class, Property.class, Failure.class, TestGroup.class) {
+    private final HibernateBundle<TestReporterConfiguration> hibernate = new HibernateBundle<TestReporterConfiguration>(TestRun.class, TestSuite.class, TestCase.class, Property.class, Failure.class, TestGroup.class, ResultFile.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(TestReporterConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -48,9 +48,6 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
 
         environment.jersey().register(new TestRunResource(testRunDao, testGroupDao));
         environment.jersey().register(new TestGroupResource(testGroupDao));
-
-
-
     }
 
 }
