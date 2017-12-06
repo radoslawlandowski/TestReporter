@@ -10,7 +10,6 @@ public class ResultFile {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(updatable = false, nullable = false)
     private int id;
 
     @Column(name = "result_file_data")
