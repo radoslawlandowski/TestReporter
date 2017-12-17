@@ -12,7 +12,7 @@ import java.util.List;
 @XmlRootElement(name="test-case")
 @Table(name = "testcase")
 @Entity
-public class TestCase {
+public class TestCase implements Propertizable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

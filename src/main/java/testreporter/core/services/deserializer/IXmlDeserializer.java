@@ -1,4 +1,4 @@
-package testreporter.core;
+package testreporter.core.services.deserializer;
 
 import javax.xml.bind.JAXBException;
 import java.io.InputStream;

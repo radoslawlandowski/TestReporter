@@ -1,7 +1,6 @@
-package testreporter.core.services;
+package testreporter.core.services.parser;
 
-import testreporter.core.IXmlDeserializer;
-import testreporter.core.TestRunDeserializer;
+import testreporter.core.services.deserializer.IXmlDeserializer;
 import testreporter.core.models.TestRun;
 
 import javax.xml.bind.JAXBException;

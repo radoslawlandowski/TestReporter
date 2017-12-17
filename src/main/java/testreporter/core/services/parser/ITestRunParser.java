@@ -1,4 +1,4 @@
-package testreporter.core.services;
+package testreporter.core.services.parser;
 
 import testreporter.core.models.TestRun;
 

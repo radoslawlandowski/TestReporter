@@ -6,18 +6,14 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import testreporter.client.DAO.TestGroupDao;
 import testreporter.client.DAO.TestRunDao;
-import testreporter.core.IXmlDeserializer;
-import testreporter.core.TestRunDeserializer;
+import testreporter.core.enums.TestRunParserTypes;
 import testreporter.core.models.TestGroup;
 import testreporter.core.models.TestRun;
-import testreporter.core.services.ITestRunParser;
-import testreporter.core.services.IZippedTestRunParser;
+import testreporter.core.services.parser.TestRunParserFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -26,10 +22,12 @@ public class TestRunResource {
 
     private TestRunDao testRunDao;
     private TestGroupDao testGroupDao;
+    private TestRunParserFactory testRunParserFactory;
 
-    public TestRunResource(TestRunDao testRunDao, TestGroupDao testGroupDao) {
+    public TestRunResource(TestRunDao testRunDao, TestGroupDao testGroupDao, TestRunParserFactory testRunParserFactory) {
         this.testRunDao = testRunDao;
         this.testGroupDao = testGroupDao;
+        this.testRunParserFactory = testRunParserFactory;
     }
 
     @POST
@@ -39,12 +37,9 @@ public class TestRunResource {
     public Response uploadFile(
             @QueryParam("test-group-name") String testGroupName,
             @FormDataParam("file") InputStream uploadedInputStream,
-            @FormDataParam("file") FormDataContentDisposition fileDetail) throws JAXBException, WebApplicationException, Exception {
+            @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
 
         TestGroup testGroup = this.testGroupDao.findByGroupName(testGroupName);
-
-        ITestRunParser parser = new IZippedTestRunParser(new TestRunDeserializer());
-        TestRun testRun = parser.parseResult(uploadedInputStream);
 
         if(testGroup == null) {
             return Response.status(Response.Status.BAD_REQUEST)
@@ -52,6 +47,10 @@ public class TestRunResource {
                     .build();
         }
 
+        String fileExtension = fileDetail.getFileName().split("\\.")[1];
+        TestRunParserTypes parserType = TestRunParserTypes.getParserTypeForFile(fileExtension);
+
+        TestRun testRun = testRunParserFactory.create(parserType).parseResult(uploadedInputStream);
         testRun.setTestGroup(testGroup);
 
         testRunDao.create(testRun);

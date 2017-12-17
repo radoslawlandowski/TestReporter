@@ -2,22 +2,12 @@ package testreporter.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.hibernate.UnitOfWork;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 import testreporter.client.DAO.TestGroupDao;
-import testreporter.client.DAO.TestRunDao;
-import testreporter.core.IXmlDeserializer;
-import testreporter.core.TestRunDeserializer;
 import testreporter.core.models.TestGroup;
-import testreporter.core.models.TestRun;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 @Path("/test-group")
 public class TestGroupResource {
