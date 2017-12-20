@@ -55,7 +55,7 @@ public class ZippedTestRunParser extends TestRunParser {
                             .stream()
                             .filter(property -> property.getName().equals(ATTACHMENT_PROPERTY_NAME))
                             .forEach(property -> {
-                                testCase.setResultFile(fileUnzipper.findByName(unzippedFiles, property.getValue()).get(0));
+                                property.setResultFile(fileUnzipper.findByName(unzippedFiles, property.getValue()).get(0));
                             });
                 });
 

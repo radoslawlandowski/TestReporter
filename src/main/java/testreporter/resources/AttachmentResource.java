@@ -28,7 +28,7 @@ public class AttachmentResource {
 
         return Response.ok(f.getData())
                 .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"attachment.jpg\"")
+                        String.format("attachment; filename=\"%s\"", f.getFileName()))
                 .build();
     }
 

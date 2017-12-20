@@ -37,36 +37,12 @@ public class TestCase implements Propertizable, Traversable {
     @OneToOne(targetEntity = Failure.class, cascade = CascadeType.ALL)
     Failure failure;
 
-    @JoinColumn(name = "resultfile_fk")
-    @OneToOne(targetEntity = ResultFile.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JsonIgnore
-    ResultFile resultFile;
-
-    @Column(name = "resultfile_fk", insertable = false, updatable = false)
-    Long resultFile_fk;
-
     public int getInternalId() {
         return internalId;
     }
 
     public void setInternalId(int internalId) {
         this.internalId = internalId;
-    }
-
-    public ResultFile getResultFile() {
-        return resultFile;
-    }
-
-    public void setResultFile(ResultFile resultFile) {
-        this.resultFile = resultFile;
-    }
-
-    public Long getResultFile_fk() {
-        return resultFile_fk;
-    }
-
-    public void setResultFile_fk(Long resultFile_fk) {
-        this.resultFile_fk = resultFile_fk;
     }
 
     @XmlAttribute(name = "id")
