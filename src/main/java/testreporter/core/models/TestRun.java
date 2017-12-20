@@ -24,7 +24,7 @@ import java.io.Serializable;
 })
 @XmlRootElement(name="test-run")
 @Table(name = "TestRun")
-public class TestRun implements Serializable {
+public class TestRun implements Serializable, Traversable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

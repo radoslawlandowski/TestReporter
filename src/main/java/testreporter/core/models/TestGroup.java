@@ -21,7 +21,7 @@ import java.util.List;
     )
 })
 @Entity
-public class TestGroup implements Serializable {
+public class TestGroup implements Serializable, Traversable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

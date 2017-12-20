@@ -9,6 +9,7 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import testreporter.client.DAO.AttachmentDao;
 import testreporter.client.DAO.TestGroupDao;
 import testreporter.client.DAO.TestRunDao;
+import testreporter.core.services.FileUtils;
 import testreporter.core.services.deserializer.TestRunDeserializer;
 import testreporter.core.models.*;
 import testreporter.core.services.unzipper.FileUnzipper;
@@ -54,7 +55,7 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
 
         final TestRunParserFactory testRunParserFactory = new TestRunParserFactory(new TestRunDeserializer(), new FileUnzipper());
 
-        environment.jersey().register(new TestRunResource(testRunDao, testGroupDao, testRunParserFactory));
+        environment.jersey().register(new TestRunResource(testRunDao, testGroupDao, testRunParserFactory, new FileUtils()));
         environment.jersey().register(new TestGroupResource(testGroupDao));
         environment.jersey().register(new AttachmentResource(attachmentDao));
     }

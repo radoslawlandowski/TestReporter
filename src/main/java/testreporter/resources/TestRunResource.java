@@ -9,6 +9,7 @@ import testreporter.client.DAO.TestRunDao;
 import testreporter.core.enums.TestRunParserTypes;
 import testreporter.core.models.TestGroup;
 import testreporter.core.models.TestRun;
+import testreporter.core.services.FileUtils;
 import testreporter.core.services.parser.TestRunParserFactory;
 
 import javax.ws.rs.*;
@@ -23,11 +24,13 @@ public class TestRunResource {
     private TestRunDao testRunDao;
     private TestGroupDao testGroupDao;
     private TestRunParserFactory testRunParserFactory;
+    private FileUtils fileUtils;
 
-    public TestRunResource(TestRunDao testRunDao, TestGroupDao testGroupDao, TestRunParserFactory testRunParserFactory) {
+    public TestRunResource(TestRunDao testRunDao, TestGroupDao testGroupDao, TestRunParserFactory testRunParserFactory, FileUtils fileUtils) {
         this.testRunDao = testRunDao;
         this.testGroupDao = testGroupDao;
         this.testRunParserFactory = testRunParserFactory;
+        this.fileUtils = fileUtils;
     }
 
     @POST
@@ -47,12 +50,11 @@ public class TestRunResource {
                     .build();
         }
 
-        String fileExtension = fileDetail.getFileName().split("\\.")[1];
+        String fileExtension = fileUtils.getFileExtension(fileDetail.getFileName());
         TestRunParserTypes parserType = TestRunParserTypes.getParserTypeForFile(fileExtension);
-
         TestRun testRun = testRunParserFactory.create(parserType).parseResult(uploadedInputStream);
-        testRun.setTestGroup(testGroup);
 
+        testRun.setTestGroup(testGroup);
         testRunDao.create(testRun);
 
         return Response.ok().build();

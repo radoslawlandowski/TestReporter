@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="property")
 @Table(name = "Nunit_Property")
 @Entity
-public class Property {
+public class Property implements Traversable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

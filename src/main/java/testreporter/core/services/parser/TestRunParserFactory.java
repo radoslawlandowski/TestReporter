@@ -3,6 +3,7 @@ package testreporter.core.services.parser;
 import testreporter.core.services.deserializer.IXmlDeserializer;
 import testreporter.core.enums.TestRunParserTypes;
 import testreporter.core.services.unzipper.IFileUnzipper;
+import testreporter.core.services.validator.FileUploadValidator;
 
 public class TestRunParserFactory {
 
@@ -22,7 +23,7 @@ public class TestRunParserFactory {
                 parser = new RawTestRunParser(this.deserializer);
                 break;
             case ZIPPED:
-                parser = new ZippedTestRunParser(this.deserializer, this.fileUnzipper);
+                parser = new ZippedTestRunParser(this.deserializer, this.fileUnzipper, new FileUploadValidator());
                 break;
         }
 

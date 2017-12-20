@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="failure")
 @Table(name = "Failure")
 @Entity
-public class Failure {
+public class Failure implements Traversable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

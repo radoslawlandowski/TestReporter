@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -43,5 +44,15 @@ public class FileUnzipper implements IFileUnzipper {
         zis.close();
 
         return unzippedFiles;
+    }
+
+    @Override
+    public List<ResultFile> findByName(List<ResultFile> resultFiles, String filename) {
+        return resultFiles.stream().filter(file -> file.getFileName().equals(filename)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ResultFile> findByExtension(List<ResultFile> resultFiles, String extension) {
+        return resultFiles.stream().filter(file -> file.getFileName().split("\\.")[1].equals(extension)).collect(Collectors.toList());
     }
 }
