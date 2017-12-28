@@ -14,10 +14,12 @@ public enum ResultFileTypes {
         this.resultsFileExtension = resultsFileExtension;
     }
 
-    public static ResultFileTypes getResultFileType(String resultsFileExtension) throws IncorrectResultFileFormat {
+    public static ResultFileTypes getResultFileType(String resultsFilename) throws IncorrectResultFileFormat {
+
+        String fileExtension = Arrays.stream(resultsFilename.split("\\.")).reduce((first, last) -> last).get();
 
         ResultFileTypes type = Arrays.stream(ResultFileTypes.values())
-                .filter(value -> value.resultsFileExtension.equals(resultsFileExtension))
+                .filter(value -> value.resultsFileExtension.equals(fileExtension))
                 .findFirst()
                 .orElseThrow(() -> new IncorrectResultFileFormat("The provided file has an unsupported extension!"));
 

@@ -1,7 +1,5 @@
 package testreporter.core.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,7 +10,7 @@ import java.util.List;
 @XmlRootElement(name="test-case")
 @Table(name = "testcase")
 @Entity
-public class TestCase implements Propertizable, Traversable {
+public class TestCase {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

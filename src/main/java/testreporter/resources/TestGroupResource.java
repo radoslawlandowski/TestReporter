@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/test-group")
+@Path("/test-groups")
 public class TestGroupResource {
 
     private TestGroupDao testGroupDao;
@@ -22,7 +22,6 @@ public class TestGroupResource {
     @Timed
     @UnitOfWork
     public Response create(TestGroup testGroup) {
-
         this.testGroupDao.create(testGroup);
 
         return Response.ok().build();
@@ -32,16 +31,17 @@ public class TestGroupResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Timed
     @UnitOfWork
-    @Path("/all")
     public Response get() {
-        return Response.ok().entity(testGroupDao.findAll()).allow("OPTIONS").build();// testGroupDao.findAll();
+        return Response.ok().entity(testGroupDao.findAll()).allow("OPTIONS").build();
     }
 
     @GET
+    @Path("/{testGroupName}")
     @Produces(MediaType.APPLICATION_JSON)
     @Timed
     @UnitOfWork
-    public TestGroup getByName(@QueryParam("test-group-name") String testGroupName)  {
-        return testGroupDao.findByGroupName(testGroupName);
+    public TestGroup getByName(@PathParam("testGroupName") String testGroupName) {
+        return testGroupDao.find(testGroupName)
+                .orElseThrow(() -> new NotFoundException("Test group of this name does not exist"));
     }
 }

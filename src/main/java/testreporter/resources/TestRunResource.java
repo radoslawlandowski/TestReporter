@@ -17,8 +17,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
-@Path("/test-run")
+@Path("/test-groups/{testGroupName}/test-runs")
 public class TestRunResource {
 
     private TestRunDao testRunDao;
@@ -38,42 +39,35 @@ public class TestRunResource {
     @Timed
     @UnitOfWork
     public Response uploadFile(
-            @QueryParam("test-group-name") String testGroupName,
+            @PathParam("testGroupName") String testGroupName,
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
 
-        TestGroup testGroup = this.testGroupDao.findByGroupName(testGroupName);
+        Optional<TestGroup> testGroup = this.testGroupDao.find(testGroupName);
 
-        if(testGroup == null) {
+        if(!testGroup.isPresent()) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("The specified test group: " + testGroupName + " does not exist!")
                     .build();
         }
 
-        String fileExtension = fileUtils.getFileExtension(fileDetail.getFileName());
-        ResultFileTypes parserType = ResultFileTypes.getResultFileType(fileExtension);
-        TestRun testRun = testRunParserFactory.create(parserType).parseResult(uploadedInputStream);
+        ResultFileTypes resultFileType = ResultFileTypes.getResultFileType(fileDetail.getFileName());
 
-        testRun.setTestGroup(testGroup);
+        TestRun testRun = testRunParserFactory.create(resultFileType).parseResult(uploadedInputStream);
+
+        testRun.setTestGroup(testGroup.get());
         testRunDao.create(testRun);
 
         return Response.ok().build();
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Timed
-    @UnitOfWork
-    @Path("/all")
-    public List<TestRun> get() {
-        return testRunDao.findAll();
-    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Timed
     @UnitOfWork
-    public List<TestRun> getByName(@QueryParam("test-group-name") String testGroupName) {
+    public List<TestRun> get(@PathParam("testGroupName") String testGroupName) {
         return testRunDao.findByGroupName(testGroupName);
     }
+
 }

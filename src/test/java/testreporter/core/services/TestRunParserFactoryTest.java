@@ -5,7 +5,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import testreporter.core.enums.ResultFileTypes;
 import testreporter.core.services.deserializer.TestRunDeserializer;
-import testreporter.core.enums.TestRunParserTypes;
 import testreporter.core.services.parser.RawTestRunParser;
 import testreporter.core.services.parser.TestRunParserFactory;
 import testreporter.core.services.parser.ZippedTestRunParser;

@@ -12,7 +12,7 @@ import java.util.List;
 @XmlRootElement(name="test-suite")
 @Entity
 @Table(name = "TestSuite")
-public class TestSuite implements Serializable, Propertizable, Traversable {
+public class TestSuite implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

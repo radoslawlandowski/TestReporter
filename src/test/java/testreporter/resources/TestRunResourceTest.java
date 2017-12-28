@@ -20,6 +20,7 @@ import testreporter.core.services.unzipper.FileUnzipper;
 import javax.ws.rs.core.Response;
 
 import java.io.*;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
@@ -54,7 +55,7 @@ public class TestRunResourceTest {
         String fileName = "file.xml";
 
         when(fileDetailsMock.getFileName()).thenReturn(fileName);
-        when(testGroupDaoMock.findByGroupName(anyString())).thenReturn(testGroupMock);
+        when(testGroupDaoMock.find(anyString())).thenReturn(Optional.of(testGroupMock));
 
         Response r = null;
         try {
@@ -79,7 +80,7 @@ public class TestRunResourceTest {
         String fileName = "file.zip";
 
         when(fileDetailsMock.getFileName()).thenReturn(fileName);
-        when(testGroupDaoMock.findByGroupName(anyString())).thenReturn(testGroupMock);
+        when(testGroupDaoMock.find(anyString())).thenReturn(Optional.of(testGroupMock));
 
         Response r = null;
         try {

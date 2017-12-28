@@ -14,20 +14,20 @@ import java.util.Collection;
 public class ResultFileTypesTest {
 
     @RunWith(Parameterized.class)
-    public static class CorrectResultFileExtensionsVerification {
+    public static class CorrectResultFilenamesVerification {
 
         @Parameterized.Parameters(name = "{index}: type {1} for file extension {0}")
         public static Collection<Object[]> data() {
             return Arrays.asList(new Object[][] {
-                    { "zip", ResultFileTypes.ZIPPED },
-                    { "xml", ResultFileTypes.RAW }
+                    { "file.zip", ResultFileTypes.ZIPPED },
+                    { "file.xml", ResultFileTypes.RAW }
             });
         }
 
         protected String fileExtension;
         protected ResultFileTypes resultFileType;
 
-        public CorrectResultFileExtensionsVerification(String fileExtension, ResultFileTypes resultFileType) {
+        public CorrectResultFilenamesVerification(String fileExtension, ResultFileTypes resultFileType) {
             this.fileExtension = fileExtension;
             this.resultFileType = resultFileType;
         }
@@ -45,12 +45,12 @@ public class ResultFileTypesTest {
         }
     }
 
-    public static class IncorrectResultFileExtensionsVerification {
+    public static class IncorrectResultFilenamesVerification {
 
         @Test
         public void checkIfGettingUnhandledTypeThrowsException() {
 
-            String incorrectExtension = "asd";
+            String incorrectExtension = "file.asd";
 
             try {
                 ResultFileTypes.getResultFileType(incorrectExtension);
@@ -62,4 +62,20 @@ public class ResultFileTypesTest {
         }
     }
 
+    public static class CorrectExceptionalResultFilenamesVerification {
+
+        @Test
+        public void checkIfGettingExtensionOfMultipleDottedFilenameWorksProperly() {
+
+            String incorrectExtension = "file.multiple.dots.asd";
+
+            try {
+                ResultFileTypes.getResultFileType(incorrectExtension);
+                fail(String.format("Expected %s to be thrown!", IncorrectResultFileFormat.class.getName()));
+            } catch(IncorrectResultFileFormat e) {
+                assertThat(e.getMessage()).isEqualTo("The provided file has an unsupported extension!");
+            }
+
+        }
+    }
 }

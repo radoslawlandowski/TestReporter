@@ -1,7 +1,6 @@
 package testreporter.core.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -18,13 +17,13 @@ import java.io.Serializable;
                 query = "from TestRun"
         ),
         @NamedQuery(
-        name = "TestRun.findByGroupName",
+        name = "TestRun.find",
         query = "from TestRun tr where tr.testGroup.name = :testGroupName"
     )
 })
 @XmlRootElement(name="test-run")
 @Table(name = "TestRun")
-public class TestRun implements Serializable, Traversable {
+public class TestRun implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

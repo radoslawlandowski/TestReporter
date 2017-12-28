@@ -10,7 +10,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/attachment")
+@Path("/attachments")
 public class AttachmentResource {
 
     private AttachmentDao attachmentDao;

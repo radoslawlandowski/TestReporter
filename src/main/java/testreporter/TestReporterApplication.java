@@ -15,7 +15,7 @@ import testreporter.core.models.*;
 import testreporter.core.services.unzipper.FileUnzipper;
 import testreporter.core.services.parser.TestRunParserFactory;
 import testreporter.resources.AttachmentResource;
-import testreporter.resources.CORSFIlter;
+import testreporter.resources.filters.CORSFIlter;
 import testreporter.resources.TestRunResource;
 import testreporter.resources.TestGroupResource;
 

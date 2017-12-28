@@ -1,4 +1,4 @@
-package testreporter.resources;
+package testreporter.resources.filters;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
