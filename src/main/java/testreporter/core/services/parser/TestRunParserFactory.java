@@ -1,7 +1,7 @@
 package testreporter.core.services.parser;
 
 import testreporter.core.services.deserializer.IXmlDeserializer;
-import testreporter.core.enums.TestRunParserTypes;
+import testreporter.core.enums.ResultFileTypes;
 import testreporter.core.services.unzipper.IFileUnzipper;
 import testreporter.core.services.validator.FileUploadValidator;
 
@@ -15,7 +15,7 @@ public class TestRunParserFactory {
         this.fileUnzipper = fileUnzipper;
     }
 
-    public ITestRunParser create(TestRunParserTypes type) {
+    public ITestRunParser create(ResultFileTypes type) {
         ITestRunParser parser = null;
 
         switch(type) {

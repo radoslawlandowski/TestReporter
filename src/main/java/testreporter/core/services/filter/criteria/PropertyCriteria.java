@@ -11,7 +11,7 @@ public class PropertyCriteria implements Criteria {
     public List<TestCase> meetCriteria(List<TestCase> testCases) {
         return testCases.stream()
                 .filter(Objects::nonNull)
-                .filter(testCase -> (testCase.getProperties()) != null)
+                .filter(testCase -> ( (testCase.getProperties()) != null) && !testCase.getProperties().isEmpty())
                 .collect(Collectors.toList());
     }
 }

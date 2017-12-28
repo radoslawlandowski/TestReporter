@@ -6,7 +6,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import testreporter.client.DAO.TestGroupDao;
 import testreporter.client.DAO.TestRunDao;
-import testreporter.core.enums.TestRunParserTypes;
+import testreporter.core.enums.ResultFileTypes;
 import testreporter.core.models.TestGroup;
 import testreporter.core.models.TestRun;
 import testreporter.core.services.FileUtils;
@@ -51,7 +51,7 @@ public class TestRunResource {
         }
 
         String fileExtension = fileUtils.getFileExtension(fileDetail.getFileName());
-        TestRunParserTypes parserType = TestRunParserTypes.getParserTypeForFile(fileExtension);
+        ResultFileTypes parserType = ResultFileTypes.getResultFileType(fileExtension);
         TestRun testRun = testRunParserFactory.create(parserType).parseResult(uploadedInputStream);
 
         testRun.setTestGroup(testGroup);
