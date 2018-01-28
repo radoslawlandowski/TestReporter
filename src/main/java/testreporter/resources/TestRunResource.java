@@ -1,7 +1,9 @@
 package testreporter.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import io.dropwizard.hibernate.UnitOfWork;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import testreporter.client.DAO.TestGroupDao;
@@ -44,6 +46,7 @@ public class TestRunResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
     @Timed
     @UnitOfWork
     public Response uploadFile(
@@ -55,7 +58,7 @@ public class TestRunResource {
 
         if(!testGroup.isPresent()) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("The specified test group: " + testGroupName + " does not exist!")
+                    .entity("{ \"message\": \"The specified test group: " + testGroupName + " does not exist!\"}")
                     .build();
         }
 
@@ -70,7 +73,7 @@ public class TestRunResource {
         testRun.setTestGroup(testGroup.get());
         testRunDao.create(testRun);
 
-        return Response.ok().build();
+        return Response.ok().entity("{\"message\": \"File uploaded!\"}").build();
     }
 
     @GET
