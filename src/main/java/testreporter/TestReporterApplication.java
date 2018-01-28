@@ -9,11 +9,12 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import testreporter.client.DAO.AttachmentDao;
 import testreporter.client.DAO.TestGroupDao;
 import testreporter.client.DAO.TestRunDao;
-import testreporter.core.services.FileUtils;
+import testreporter.core.services.handler.AttachmentHandler;
+import testreporter.core.services.handler.UploadedTestResultsHandler;
 import testreporter.core.services.deserializer.TestRunDeserializer;
 import testreporter.core.models.*;
 import testreporter.core.services.unzipper.FileUnzipper;
-import testreporter.core.services.parser.TestRunParserFactory;
+import testreporter.core.services.validator.UploadedFilesValidator;
 import testreporter.resources.AttachmentResource;
 import testreporter.resources.filters.CORSFIlter;
 import testreporter.resources.TestRunResource;
@@ -25,7 +26,7 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
         new TestReporterApplication().run(args);
     }
 
-    private final HibernateBundle<TestReporterConfiguration> hibernate = new HibernateBundle<TestReporterConfiguration>(TestRun.class, TestSuite.class, TestCase.class, Property.class, Failure.class, TestGroup.class, ResultFile.class) {
+    private final HibernateBundle<TestReporterConfiguration> hibernate = new HibernateBundle<TestReporterConfiguration>(TestRun.class, TestSuite.class, TestCase.class, Property.class, Failure.class, TestGroup.class, File.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(TestReporterConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -53,9 +54,9 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
         final TestGroupDao testGroupDao = new TestGroupDao(hibernate.getSessionFactory());
         final AttachmentDao attachmentDao = new AttachmentDao(hibernate.getSessionFactory());
 
-        final TestRunParserFactory testRunParserFactory = new TestRunParserFactory(new TestRunDeserializer(), new FileUnzipper());
+        final UploadedTestResultsHandler uploadedTestResultsHandler = new UploadedTestResultsHandler(new UploadedFilesValidator(), new FileUnzipper());
 
-        environment.jersey().register(new TestRunResource(testRunDao, testGroupDao, testRunParserFactory, new FileUtils()));
+        environment.jersey().register(new TestRunResource(testRunDao, testGroupDao, new TestRunDeserializer(), uploadedTestResultsHandler, new AttachmentHandler()));
         environment.jersey().register(new TestGroupResource(testGroupDao));
         environment.jersey().register(new AttachmentResource(attachmentDao));
     }

@@ -11,10 +11,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Enclosed.class)
-public class ResultFileTypesTest {
+public class FileTypesTest {
 
     @RunWith(Parameterized.class)
-    public static class CorrectResultFilenamesVerification {
+    public static class CorrectFilenamesVerification {
 
         @Parameterized.Parameters(name = "{index}: type {1} for file extension {0}")
         public static Collection<Object[]> data() {
@@ -27,7 +27,7 @@ public class ResultFileTypesTest {
         protected String fileExtension;
         protected ResultFileTypes resultFileType;
 
-        public CorrectResultFilenamesVerification(String fileExtension, ResultFileTypes resultFileType) {
+        public CorrectFilenamesVerification(String fileExtension, ResultFileTypes resultFileType) {
             this.fileExtension = fileExtension;
             this.resultFileType = resultFileType;
         }
@@ -45,7 +45,7 @@ public class ResultFileTypesTest {
         }
     }
 
-    public static class IncorrectResultFilenamesVerification {
+    public static class IncorrectFilenamesVerification {
 
         @Test
         public void checkIfGettingUnhandledTypeThrowsException() {
@@ -62,7 +62,7 @@ public class ResultFileTypesTest {
         }
     }
 
-    public static class CorrectExceptionalResultFilenamesVerification {
+    public static class CorrectExceptionalFilenamesVerification {
 
         @Test
         public void checkIfGettingExtensionOfMultipleDottedFilenameWorksProperly() {

@@ -3,7 +3,7 @@ package testreporter.resources;
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.hibernate.UnitOfWork;
 import testreporter.client.DAO.AttachmentDao;
-import testreporter.core.models.ResultFile;
+import testreporter.core.models.File;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.HttpHeaders;
@@ -24,7 +24,7 @@ public class AttachmentResource {
     @UnitOfWork
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response create(@QueryParam("fileId") Integer fileId) {
-        ResultFile f = attachmentDao.getAttachment(fileId);
+        File f = attachmentDao.getAttachment(fileId);
 
         return Response.ok(f.getData())
                 .header(HttpHeaders.CONTENT_DISPOSITION,

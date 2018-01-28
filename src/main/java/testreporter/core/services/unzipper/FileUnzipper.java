@@ -1,6 +1,6 @@
 package testreporter.core.services.unzipper;
 
-import testreporter.core.models.ResultFile;
+import testreporter.core.models.File;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,8 +16,8 @@ public class FileUnzipper implements IFileUnzipper {
     public static final int BUFFER_SIZE = 1024;
 
     @Override
-    public List<ResultFile> unzip(InputStream stream) throws IOException {
-        List<ResultFile> unzippedFiles = new ArrayList<>();
+    public List<File> unzip(InputStream stream) throws IOException {
+        List<File> unzippedFiles = new ArrayList<>();
 
         byte[] buffer = new byte[BUFFER_SIZE];
 
@@ -32,7 +32,7 @@ public class FileUnzipper implements IFileUnzipper {
             }
             os.close();
 
-            ResultFile file = new ResultFile();
+            File file = new File();
             file.setFileName(zipEntry.getName());
             file.setData(os.toByteArray());
 
@@ -44,15 +44,5 @@ public class FileUnzipper implements IFileUnzipper {
         zis.close();
 
         return unzippedFiles;
-    }
-
-    @Override
-    public List<ResultFile> findByName(List<ResultFile> resultFiles, String filename) {
-        return resultFiles.stream().filter(file -> file.getFileName().equals(filename)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ResultFile> findByExtension(List<ResultFile> resultFiles, String extension) {
-        return resultFiles.stream().filter(file -> file.getFileName().split("\\.")[1].equals(extension)).collect(Collectors.toList());
     }
 }

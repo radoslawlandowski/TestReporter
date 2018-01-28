@@ -12,10 +12,11 @@ import testreporter.client.DAO.TestRunDao;
 import testreporter.core.models.Property;
 import testreporter.core.models.TestGroup;
 import testreporter.core.models.TestRun;
-import testreporter.core.services.FileUtils;
+import testreporter.core.services.handler.AttachmentHandler;
+import testreporter.core.services.handler.UploadedTestResultsHandler;
 import testreporter.core.services.deserializer.TestRunDeserializer;
-import testreporter.core.services.parser.TestRunParserFactory;
 import testreporter.core.services.unzipper.FileUnzipper;
+import testreporter.core.services.validator.UploadedFilesValidator;
 
 import javax.ws.rs.core.Response;
 
@@ -40,10 +41,10 @@ public class TestRunResourceTest {
 
     @Before
     public void setUp() throws Exception {
-        TestRunParserFactory testRunParserFactory = new TestRunParserFactory(new TestRunDeserializer(), new FileUnzipper());
-        FileUtils fileUtils = new FileUtils();
 
-        testRunResource = new TestRunResource(testRunDaoMock, testGroupDaoMock, testRunParserFactory, fileUtils);
+        UploadedTestResultsHandler uploadedTestResultsHandler = new UploadedTestResultsHandler(new UploadedFilesValidator(), new FileUnzipper());
+
+        testRunResource = new TestRunResource(testRunDaoMock, testGroupDaoMock, new TestRunDeserializer(), uploadedTestResultsHandler, new AttachmentHandler());
     }
 
     @Test
@@ -96,8 +97,8 @@ public class TestRunResourceTest {
         Property meaningfulAttachment = getMeaningfulAttachment(argumentCaptor);
         assertThat(meaningfulAttachment.getName()).isEqualTo("Attachment");
         assertThat(meaningfulAttachment.getValue()).isEqualTo("result-pic-1.jpg");
-        assertThat(meaningfulAttachment.getResultFile().getFileName()).isEqualTo("result-pic-1.jpg");
-        assertThat(meaningfulAttachment.getResultFile().getData().length).isGreaterThan(0);
+        assertThat(meaningfulAttachment.getFile().getFileName()).isEqualTo("result-pic-1.jpg");
+        assertThat(meaningfulAttachment.getFile().getData().length).isGreaterThan(0);
 
         assertThat(r.getStatus()).isEqualTo(200);
     }

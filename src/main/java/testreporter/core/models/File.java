@@ -4,19 +4,19 @@ import javax.persistence.*;
 import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
 
-@Table(name = "Result_image")
+@Table(name = "file_file")
 @Entity
-public class ResultFile {
+public class File {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
-    @Column(name = "result_file_data")
+    @Column(name = "file_file_data")
     @Lob
     private byte[] data;
 
-    @Column(name = "result_file_name")
+    @Column(name = "file_file_name")
     private String fileName;
 
     public String getFileName() {

@@ -39,19 +39,19 @@ public class Property {
     }
 
     @JoinColumn(name = "resultfile_fk")
-    @OneToOne(targetEntity = ResultFile.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(targetEntity = File.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JsonIgnore
-    ResultFile resultFile;
+    File file;
 
     @Column(name = "resultfile_fk", insertable = false, updatable = false)
     Long resultFile_fk;
 
-    public ResultFile getResultFile() {
-        return resultFile;
+    public File getFile() {
+        return file;
     }
 
-    public void setResultFile(ResultFile resultFile) {
-        this.resultFile = resultFile;
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public Long getResultFile_fk() {

@@ -17,20 +17,14 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{webapiHost}}:{{webapiPort}}/test-group?test-group-name={{testGroupName}}",
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-groups/{{testGroupName}}",
 							"host": [
 								"{{webapiHost}}"
 							],
 							"port": "{{webapiPort}}",
 							"path": [
-								"test-group"
-							],
-							"query": [
-								{
-									"key": "test-group-name",
-									"value": "{{testGroupName}}",
-									"equals": true
-								}
+								"test-groups",
+								"{{testGroupName}}"
 							]
 						},
 						"description": ""
@@ -44,14 +38,13 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{webapiHost}}:{{webapiPort}}/test-group/all",
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-groups",
 							"host": [
 								"{{webapiHost}}"
 							],
 							"port": "{{webapiPort}}",
 							"path": [
-								"test-group",
-								"all"
+								"test-groups"
 							]
 						},
 						"description": ""
@@ -73,13 +66,13 @@
 							"raw": "{\n\t\"name\": \"{{testGroupName}}\",\n\t\"description\": \"{{testGroupName}} description\"\n}"
 						},
 						"url": {
-							"raw": "{{webapiHost}}:{{webapiPort}}/test-group",
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-groups",
 							"host": [
 								"{{webapiHost}}"
 							],
 							"port": "{{webapiPort}}",
 							"path": [
-								"test-group"
+								"test-groups"
 							]
 						},
 						"description": ""
@@ -109,25 +102,20 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "nunit-3-test-result.xml"
+									"src": "test-run-1.zip"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{webapiHost}}:{{webapiPort}}/test-run?test-group-name={{testGroupName}}",
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-groups/{{testGroupName}}/test-runs",
 							"host": [
 								"{{webapiHost}}"
 							],
 							"port": "{{webapiPort}}",
 							"path": [
-								"test-run"
-							],
-							"query": [
-								{
-									"key": "test-group-name",
-									"value": "{{testGroupName}}",
-									"equals": true
-								}
+								"test-groups",
+								"{{testGroupName}}",
+								"test-runs"
 							]
 						}
 					},
@@ -140,13 +128,13 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{webapiHost}}:{{webapiPort}}/test-run?test-group-name={{testGroupName}}",
+							"raw": "{{webapiHost}}:{{webapiPort}}/test-runs?test-group-name={{testGroupName}}",
 							"host": [
 								"{{webapiHost}}"
 							],
 							"port": "{{webapiPort}}",
 							"path": [
-								"test-run"
+								"test-runs"
 							],
 							"query": [
 								{
@@ -158,22 +146,34 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "attachment",
+			"description": "",
+			"item": [
 				{
-					"name": "Get all test runs",
+					"name": "Get attachment by id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{webapiHost}}:{{webapiPort}}/test-run/all",
+							"raw": "{{webapiHost}}:{{webapiPort}}/attachments?fileId=23",
 							"host": [
 								"{{webapiHost}}"
 							],
 							"port": "{{webapiPort}}",
 							"path": [
-								"test-run",
-								"all"
+								"attachments"
+							],
+							"query": [
+								{
+									"key": "fileId",
+									"value": "23",
+									"equals": true
+								}
 							]
 						},
 						"description": ""

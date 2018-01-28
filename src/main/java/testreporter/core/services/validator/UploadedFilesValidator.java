@@ -1,16 +1,16 @@
 package testreporter.core.services.validator;
 
-import testreporter.core.models.ResultFile;
+import testreporter.core.models.File;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FileUploadValidator {
+public class UploadedFilesValidator {
 
-    public boolean isValid(List<ResultFile> resultFiles) {
+    public boolean isValid(List<File> files) {
         List<String> fileNames = new ArrayList<>();
-        resultFiles.forEach(file -> fileNames.add(file.getFileName()));
+        files.forEach(file -> fileNames.add(file.getFileName()));
 
         return areFilesDistinct(fileNames) && hasOnlyOneXmlFile(fileNames);
     }
