@@ -6,6 +6,7 @@ import testreporter.core.models.TestGroup;
 import testreporter.core.models.TestRun;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TestGroupDao extends AbstractDAO<TestGroup> {
 
@@ -17,8 +18,8 @@ public class TestGroupDao extends AbstractDAO<TestGroup> {
         return list(namedQuery("TestGroup.findAll"));
     }
 
-    public TestGroup findByGroupName(String testGroupName) {
-        return uniqueResult(namedQuery("TestGroup.findByTestGroupName").setParameter("testGroupName", testGroupName));
+    public Optional<TestGroup> find(String testGroupName) {
+        return Optional.ofNullable(uniqueResult(namedQuery("TestGroup.findByTestGroupName").setParameter("testGroupName", testGroupName)));
     }
 
     public long create(TestGroup testRun) {

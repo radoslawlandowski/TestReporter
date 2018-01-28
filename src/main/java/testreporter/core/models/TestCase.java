@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @XmlRootElement(name="test-case")
-@Table(name = "TestCase")
+@Table(name = "testcase")
 @Entity
 public class TestCase {
 
@@ -34,6 +34,14 @@ public class TestCase {
 
     @OneToOne(targetEntity = Failure.class, cascade = CascadeType.ALL)
     Failure failure;
+
+    public int getInternalId() {
+        return internalId;
+    }
+
+    public void setInternalId(int internalId) {
+        this.internalId = internalId;
+    }
 
     @XmlAttribute(name = "id")
     public int getId() {

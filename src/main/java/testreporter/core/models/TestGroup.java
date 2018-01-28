@@ -4,8 +4,6 @@ package testreporter.core.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.List;
 

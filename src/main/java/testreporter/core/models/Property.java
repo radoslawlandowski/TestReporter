@@ -1,6 +1,8 @@
 package testreporter.core.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,4 +37,29 @@ public class Property {
     public void setValue(String value) {
         this.value = value;
     }
+
+    @JoinColumn(name = "resultfile_fk")
+    @OneToOne(targetEntity = File.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JsonIgnore
+    File file;
+
+    @Column(name = "resultfile_fk", insertable = false, updatable = false)
+    Long resultFile_fk;
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public Long getResultFile_fk() {
+        return resultFile_fk;
+    }
+
+    public void setResultFile_fk(Long resultFile_fk) {
+        this.resultFile_fk = resultFile_fk;
+    }
+
 }

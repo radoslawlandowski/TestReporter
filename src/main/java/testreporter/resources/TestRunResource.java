@@ -6,27 +6,40 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import testreporter.client.DAO.TestGroupDao;
 import testreporter.client.DAO.TestRunDao;
-import testreporter.core.IXmlDeserializer;
-import testreporter.core.TestRunDeserializer;
+import testreporter.core.enums.ResultFileTypes;
 import testreporter.core.models.TestGroup;
+import testreporter.core.models.TestResults;
 import testreporter.core.models.TestRun;
+import testreporter.core.services.handler.AttachmentHandler;
+import testreporter.core.services.handler.UploadedTestResultsHandler;
+import testreporter.core.services.deserializer.TestRunDeserializer;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
-@Path("/test-run")
+@Path("/test-groups/{testGroupName}/test-runs")
 public class TestRunResource {
 
     private TestRunDao testRunDao;
     private TestGroupDao testGroupDao;
+    private TestRunDeserializer testRunDeserializer;
+    private UploadedTestResultsHandler uploadedTestResultsHandler;
+    private AttachmentHandler attachmentHandler;
 
-    public TestRunResource(TestRunDao testRunDao, TestGroupDao testGroupDao) {
+    public TestRunResource(TestRunDao testRunDao,
+                           TestGroupDao testGroupDao,
+                           TestRunDeserializer testRunDeserializer,
+                           UploadedTestResultsHandler uploadedTestResultsHandler,
+                           AttachmentHandler attachmentHandler) {
         this.testRunDao = testRunDao;
         this.testGroupDao = testGroupDao;
+        this.testRunDeserializer = testRunDeserializer;
+        this.uploadedTestResultsHandler = uploadedTestResultsHandler;
+        this.attachmentHandler = attachmentHandler;
     }
 
     @POST
@@ -34,23 +47,27 @@ public class TestRunResource {
     @Timed
     @UnitOfWork
     public Response uploadFile(
-            @QueryParam("test-group-name") String testGroupName,
+            @PathParam("testGroupName") String testGroupName,
             @FormDataParam("file") InputStream uploadedInputStream,
-            @FormDataParam("file") FormDataContentDisposition fileDetail) throws JAXBException, WebApplicationException {
+            @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
 
-        TestGroup testGroup = this.testGroupDao.findByGroupName(testGroupName);
+        Optional<TestGroup> testGroup = this.testGroupDao.find(testGroupName);
 
-        IXmlDeserializer des = new TestRunDeserializer();
-
-        TestRun testRun = (TestRun)des.deserialize(uploadedInputStream);
-        if(testGroup == null) {
+        if(!testGroup.isPresent()) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("The specified test group: " + testGroupName + " does not exist!")
                     .build();
         }
 
-        testRun.setTestGroup(testGroup);
+        ResultFileTypes resultFileType = ResultFileTypes.getResultFileType(fileDetail.getFileName());
 
+        TestResults testResults = uploadedTestResultsHandler.getTestResult(uploadedInputStream, resultFileType);
+
+        TestRun testRun = testRunDeserializer.deserialize(testResults.getXmlFile().getData());
+
+        testResults.getAttachments().ifPresent(atts -> attachmentHandler.handleAttachments(testRun, atts));
+
+        testRun.setTestGroup(testGroup.get());
         testRunDao.create(testRun);
 
         return Response.ok().build();
@@ -60,16 +77,8 @@ public class TestRunResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Timed
     @UnitOfWork
-    @Path("/all")
-    public List<TestRun> get() {
-        return testRunDao.findAll();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Timed
-    @UnitOfWork
-    public List<TestRun> getByName(@QueryParam("test-group-name") String testGroupName) {
+    public List<TestRun> get(@PathParam("testGroupName") String testGroupName) {
         return testRunDao.findByGroupName(testGroupName);
     }
+
 }
