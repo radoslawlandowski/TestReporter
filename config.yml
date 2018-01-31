@@ -19,7 +19,7 @@ database:
   password: postgres
 
   # the JDBC URL
-  url: jdbc:postgresql://localhost/testreporter
+  url: jdbc:postgresql://db:5432/testreporter
 
   # any properties specific to your JDBC driver:
   properties:
