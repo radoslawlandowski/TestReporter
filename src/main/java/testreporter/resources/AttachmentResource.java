@@ -1,6 +1,7 @@
 package testreporter.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import com.google.inject.Inject;
 import io.dropwizard.hibernate.UnitOfWork;
 import testreporter.client.DAO.AttachmentDao;
 import testreporter.core.models.File;
@@ -13,11 +14,7 @@ import javax.ws.rs.core.Response;
 @Path("/attachments")
 public class AttachmentResource {
 
-    private AttachmentDao attachmentDao;
-
-    public AttachmentResource(AttachmentDao attachmentDao) {
-        this.attachmentDao = attachmentDao;
-    }
+    @Inject private AttachmentDao attachmentDao;
 
     @GET
     @Timed

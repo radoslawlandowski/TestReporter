@@ -1,5 +1,6 @@
 package testreporter.core.services.unzipper;
 
+import com.google.inject.Singleton;
 import testreporter.core.models.File;
 
 import java.io.ByteArrayOutputStream;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+@Singleton
 public class FileUnzipper implements IFileUnzipper {
 
     public static final int BUFFER_SIZE = 1024;

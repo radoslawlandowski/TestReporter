@@ -1,11 +1,13 @@
 package testreporter.core.services.validator;
 
+import com.google.inject.Singleton;
 import testreporter.core.models.File;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Singleton
 public class UploadedFilesValidator {
 
     public boolean isValid(List<File> files) {
