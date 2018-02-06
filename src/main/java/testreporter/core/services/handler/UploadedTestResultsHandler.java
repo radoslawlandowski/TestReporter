@@ -1,5 +1,7 @@
 package testreporter.core.services.handler;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.apache.commons.io.IOUtils;
 import testreporter.core.enums.ResultFileTypes;
 import testreporter.core.models.File;
@@ -14,15 +16,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Singleton
 public class UploadedTestResultsHandler {
 
-    protected UploadedFilesValidator uploadedFilesValidator;
-    protected FileUnzipper fileUnzipper;
-
-    public UploadedTestResultsHandler(UploadedFilesValidator uploadedFilesValidator, FileUnzipper fileUnzipper) {
-        this.uploadedFilesValidator = uploadedFilesValidator;
-        this.fileUnzipper = fileUnzipper;
-    }
+    @Inject protected UploadedFilesValidator uploadedFilesValidator;
+    @Inject protected FileUnzipper fileUnzipper;
 
     public TestResults getTestResult(InputStream is, ResultFileTypes resultFileType) throws IOException {
         List<File> files = getFiles(is, resultFileType);

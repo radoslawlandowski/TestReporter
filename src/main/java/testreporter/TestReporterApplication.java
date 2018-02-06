@@ -6,6 +6,7 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import ru.vyarus.dropwizard.guice.GuiceBundle;
 import testreporter.client.DAO.AttachmentDao;
 import testreporter.client.DAO.TestGroupDao;
 import testreporter.client.DAO.TestRunDao;
@@ -26,13 +27,6 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
         new TestReporterApplication().run(args);
     }
 
-    private final HibernateBundle<TestReporterConfiguration> hibernate = new HibernateBundle<TestReporterConfiguration>(TestRun.class, TestSuite.class, TestCase.class, Property.class, Failure.class, TestGroup.class, File.class) {
-        @Override
-        public DataSourceFactory getDataSourceFactory(TestReporterConfiguration configuration) {
-            return configuration.getDataSourceFactory();
-        }
-    };
-
     @Override
     public String getName() {
         return "testreporter";
@@ -40,7 +34,14 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
 
     @Override
     public void initialize(final Bootstrap<TestReporterConfiguration> bootstrap) {
+        final HbnBundle hibernate = new HbnBundle();
+        // register hbn bundle before guice to make sure factory initialized before guice context start
         bootstrap.addBundle(hibernate);
+        bootstrap.addBundle(GuiceBundle.builder()
+                .enableAutoConfig("testreporter")
+                .modules(new HbnModule(hibernate))
+                .useWebInstallers()
+                .build());
     }
 
     @Override
@@ -48,17 +49,6 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
                     final Environment environment) {
 
         environment.jersey().register(MultiPartFeature.class);
-        environment.jersey().register(CORSFIlter.class);
-
-        final TestRunDao testRunDao = new TestRunDao(hibernate.getSessionFactory());
-        final TestGroupDao testGroupDao = new TestGroupDao(hibernate.getSessionFactory());
-        final AttachmentDao attachmentDao = new AttachmentDao(hibernate.getSessionFactory());
-
-        final UploadedTestResultsHandler uploadedTestResultsHandler = new UploadedTestResultsHandler(new UploadedFilesValidator(), new FileUnzipper());
-
-        environment.jersey().register(new TestRunResource(testRunDao, testGroupDao, new TestRunDeserializer(), uploadedTestResultsHandler, new AttachmentHandler()));
-        environment.jersey().register(new TestGroupResource(testGroupDao));
-        environment.jersey().register(new AttachmentResource(attachmentDao));
     }
 
 }

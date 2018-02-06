@@ -2,6 +2,7 @@ package testreporter.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.inject.Inject;
 import io.dropwizard.hibernate.UnitOfWork;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -26,23 +27,11 @@ import java.util.Optional;
 @Path("/test-groups/{testGroupName}/test-runs")
 public class TestRunResource {
 
-    private TestRunDao testRunDao;
-    private TestGroupDao testGroupDao;
-    private TestRunDeserializer testRunDeserializer;
-    private UploadedTestResultsHandler uploadedTestResultsHandler;
-    private AttachmentHandler attachmentHandler;
-
-    public TestRunResource(TestRunDao testRunDao,
-                           TestGroupDao testGroupDao,
-                           TestRunDeserializer testRunDeserializer,
-                           UploadedTestResultsHandler uploadedTestResultsHandler,
-                           AttachmentHandler attachmentHandler) {
-        this.testRunDao = testRunDao;
-        this.testGroupDao = testGroupDao;
-        this.testRunDeserializer = testRunDeserializer;
-        this.uploadedTestResultsHandler = uploadedTestResultsHandler;
-        this.attachmentHandler = attachmentHandler;
-    }
+    @Inject private TestRunDao testRunDao;
+    @Inject private TestGroupDao testGroupDao;
+    @Inject private TestRunDeserializer testRunDeserializer;
+    @Inject private UploadedTestResultsHandler uploadedTestResultsHandler;
+    @Inject private AttachmentHandler attachmentHandler;
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)

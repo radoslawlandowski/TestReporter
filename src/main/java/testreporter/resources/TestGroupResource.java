@@ -1,6 +1,7 @@
 package testreporter.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import com.google.inject.Inject;
 import io.dropwizard.hibernate.UnitOfWork;
 import testreporter.client.DAO.TestGroupDao;
 import testreporter.core.models.TestGroup;
@@ -12,11 +13,7 @@ import javax.ws.rs.core.Response;
 @Path("/test-groups")
 public class TestGroupResource {
 
-    private TestGroupDao testGroupDao;
-
-    public TestGroupResource(TestGroupDao testGroupDao) {
-        this.testGroupDao = testGroupDao;
-    }
+    @Inject private TestGroupDao testGroupDao;
 
     @POST
     @Timed

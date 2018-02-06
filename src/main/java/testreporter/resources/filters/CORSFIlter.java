@@ -1,10 +1,12 @@
 package testreporter.resources.filters;
+import javax.servlet.annotation.WebFilter;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
 
+@WebFilter(urlPatterns = "/*")
 public class CORSFIlter implements ContainerResponseFilter {
 
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
