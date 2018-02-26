@@ -1,0 +1,34 @@
+<div class="alert alert-default">
+    <div>
+        <h3>Suite: {{testSuite.name}}</h3>            
+    </div>
+    <span class="float-left">{{testSuite.fullname}} </span>           
+
+    <div class="clearfix"></div>
+    <div *ngIf="testSuite.testCases.length !== 0">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>fullname</th>
+                    <th>result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let testCase of testSuite.testCases | result: chosenResult" (click)="setCurrentTestCase(testCase)">
+                    <th scope="row">{{testCase.id}}</th>
+                    <td>{{testCase.name}}</td>
+                    <td>{{testCase.fullname}}</td>
+                    <td>
+                        <test-case-result-badge [resultName]="testCase.result" [fontSizePercentage]="90"></test-case-result-badge>    
+                    </td>
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <test-suite *ngFor="let testSuite of testSuite.testSuites" [testSuite]="testSuite" [chosenResult]="chosenResult"></test-suite>    
+    </div>
+</div>

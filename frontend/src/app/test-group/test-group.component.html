@@ -1,0 +1,43 @@
+<div>
+    <div>
+        <h1>Group: {{testGroup.name}}</h1>
+    </div>
+
+    <span>{{testGroup.description}}</span>    
+
+    <div>
+        Test runs:
+    </div>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>fullname</th>
+                    <th>run date</th>
+                    <th>result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let testRun of testGroup.testRuns; let i = index" (click)="setRun(testRun)">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{testRun.name}}</td>
+                    <td>{{testRun.fullname}}</td>
+                    <td>{{testRun.runDate}}</td>                                        
+                    <td>
+                        <span>
+                            {{testRun.result}}
+                        </span>
+                    </td>
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+
+    <div style="clear:both"></div>    
+
+    <test-run [testRun]="chosenTestRun"></test-run>    
+
+</div>

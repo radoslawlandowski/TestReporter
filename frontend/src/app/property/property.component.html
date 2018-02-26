@@ -1,0 +1,11 @@
+<div>
+    <span><strong>{{property.name}}</strong></span>
+    <span>{{property.value}}</span>
+
+    <div *ngIf="isImage() == true && imageToShow" class="card" style="width:20%">
+        <img [src]="imageToShow" alt="Place image title" style="max-width:100%">
+        <div class="card-body">
+          <span class="card-text">{{property.value}}</span>
+        </div>
+      </div>
+</div>

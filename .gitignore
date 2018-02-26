@@ -3,3 +3,4 @@ api/target
 
 *.log
 dependency-reduced-pom.xml
+frontend/node_modules/

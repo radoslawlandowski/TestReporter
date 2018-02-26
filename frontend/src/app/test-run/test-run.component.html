@@ -1,0 +1,19 @@
+<div>
+    <div>
+        <h1>Run: {{testRun.name}}</h1>
+    </div>
+
+    <span>{{testRun.fullname}}</span>    
+
+    <hr>    
+
+    <div>
+        <result-picker class="float-right clearfix" #picker></result-picker>            
+    </div>
+
+    <div style="clear:both"></div>    
+
+    <div>
+        <test-suite *ngFor="let testSuite of testRun.testSuite.testSuites" [testSuite]="testSuite" [chosenResult]="picker.chosenResult"></test-suite>    
+    </div>
+</div>
