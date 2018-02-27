@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Table(name = "TestGroup")
+@Table(name = "test_group")
 @NamedQueries({
     @NamedQuery(
         name = "TestGroup.findByTestGroupName",

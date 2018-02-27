@@ -11,7 +11,7 @@ import java.util.List;
 
 @XmlRootElement(name="test-suite")
 @Entity
-@Table(name = "TestSuite")
+@Table(name = "test_suite")
 public class TestSuite implements Serializable {
 
     @Id

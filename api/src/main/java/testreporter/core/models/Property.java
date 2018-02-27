@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="property")
-@Table(name = "Nunit_Property")
+@Table(name = "nunit_property")
 @Entity
 public class Property {
 

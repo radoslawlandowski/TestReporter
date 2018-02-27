@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="failure")
-@Table(name = "Failure")
+@Table(name = "failure")
 @Entity
 public class Failure {
 

@@ -7,7 +7,7 @@ server:
   rootPath: '/api/*'
   applicationConnectors:
     - type: http
-      port: 1111
+      port: 11114
 
 database:
   # the name of your JDBC driver
@@ -20,7 +20,7 @@ database:
   password: postgres
 
   # the JDBC URL
-  url: jdbc:postgresql://db:5432/testreporter
+  url: jdbc:postgresql://localhost:5432/testreporter
 
   # any properties specific to your JDBC driver:
   properties:

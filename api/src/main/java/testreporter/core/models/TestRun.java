@@ -22,7 +22,7 @@ import java.io.Serializable;
     )
 })
 @XmlRootElement(name="test-run")
-@Table(name = "TestRun")
+@Table(name = "test_run")
 public class TestRun implements Serializable {
 
     @Id

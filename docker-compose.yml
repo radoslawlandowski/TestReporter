@@ -12,9 +12,12 @@ services:
       restart_policy:
         condition: on-failure
     ports:
-      - "5432:5432"
+      - "15432:5432"
     networks:
       - webnet
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
   api:
     # replace username/repo:tag with your name and image details
     image: tr-api
@@ -51,5 +54,6 @@ services:
       - webnet
     depends_on:
       - api
+    command: [nginx, '-g', 'daemon off;']
 networks:
   webnet:
