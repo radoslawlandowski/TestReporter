@@ -1,0 +1,11 @@
+.test-group {
+    border-style: solid;
+    border-color: #8080808a;
+    border-width: 0.05em;
+    border-radius: 2px;
+
+    background-color: #8a8a8a61;
+
+    margin-top: 1em;
+    padding: 16px;
+}

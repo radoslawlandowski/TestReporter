@@ -1,0 +1,27 @@
+<span class="test-case">
+    <div>
+        <h1>Test case: {{testCase.name}}</h1>       
+    </div>
+    <div>
+        <span>{{testCase.fullname}}</span>
+        <test-case-result-badge class="float-right" [resultName]="testCase.result" [fontSizePercentage]="140"></test-case-result-badge>    
+    </div>
+
+    <hr>
+
+    <div >
+        <div>
+            <span>id: {{testCase.id}}</span> | 
+            <span>name: {{testCase.name}}</span> | 
+            <span>fullname: {{testCase.fullname}}</span> 
+        </div>
+    </div>
+
+    <failure *ngIf="testCase.failure" [failure]="testCase.failure"></failure>
+
+    <hr>
+
+    <div *ngIf="testCase.properties">
+        <property *ngFor="let property of testCase.properties" [property]="property"></property>        
+    </div>
+</span>

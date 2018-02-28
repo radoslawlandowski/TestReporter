@@ -1,0 +1,13 @@
+html * {
+    font-family: 'Cuprum', sans-serif !important;    
+}
+
+tr:hover {
+    background-color: aliceblue;
+    cursor: pointer;
+}
+
+p:hover {
+    background-color: gold;
+    cursor: pointer;
+}

@@ -1,0 +1,55 @@
+version: "3"
+services:
+  db:
+    # replace username/repo:tag with your name and image details
+    image: tr-db
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 550M
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  api:
+    # replace username/repo:tag with your name and image details
+    image: tr-api
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 3000M
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet
+    depends_on:
+      - db
+  front:
+    # replace username/repo:tag with your name and image details
+    image: tr-fr
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 750M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8083:80"
+    networks:
+      - webnet
+    depends_on:
+      - api
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html:ro
+    command: [nginx, '-g', 'daemon off;']
+networks:
+  webnet:
