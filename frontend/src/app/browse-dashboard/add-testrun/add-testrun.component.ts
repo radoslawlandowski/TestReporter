@@ -35,6 +35,7 @@ export class AddTestrunComponent {
         this.testGroupService.uploadFile(this.testGroup.name, file).subscribe(status => {
           this.uploadStatus = (status as ApiResponse).message;
         })
+        this.uploadStatus = "The file is being uploaded..."        
     }
   }
 }

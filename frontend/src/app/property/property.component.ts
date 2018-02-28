@@ -15,6 +15,7 @@ export class PropertyComponent implements OnInit {
   @Input() property: Property;
 
   imageToShow: any;  
+  downloadStatus: any;
 
   constructor(private http: HttpClient) {
 
@@ -31,10 +32,13 @@ export class PropertyComponent implements OnInit {
   }
 
   getImageFromService(imageId: Number) {
+    this.downloadStatus = "Downloading the image..."
     return this.getImage(imageId).subscribe(data => {
+      this.downloadStatus = "Image donwloaded!"      
       return this.createImageFromBlob(data);
     }, error => {
       console.log(error); 
+      this.downloadStatus = "Image download failed!"            
     });
 }
   
