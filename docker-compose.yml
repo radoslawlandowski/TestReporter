@@ -29,8 +29,6 @@ services:
           memory: 2150M
       restart_policy:
         condition: on-failure
-    #volumes:
-    #  - /TestReporter/api:/app
     ports:
       - "1111:1111"
     networks:
@@ -53,7 +51,9 @@ services:
     networks:
       - webnet
     depends_on:
-      - api
+      - apimkdir 
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html:ro
     command: [nginx, '-g', 'daemon off;']
 networks:
   webnet:

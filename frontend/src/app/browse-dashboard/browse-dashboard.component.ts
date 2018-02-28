@@ -31,8 +31,10 @@ export class BrowseDashboardComponent implements OnInit, OnChanges {
 
     this.testGroupService.getTestGroups().subscribe(value => {
       self.groups = value;
-      self.chosenGroup = self.groups[2];
-      self.chosenRun = self.chosenGroup.testRuns[0];
+      if(self.groups.length > 0) {
+        self.chosenGroup = self.groups[0];
+        self.chosenRun = self.chosenGroup.testRuns[0];
+      }
     })    
   }
 
