@@ -62,7 +62,7 @@ public class TestRunResource {
         testRun.setTestGroup(testGroup.get());
         testRunDao.create(testRun);
 
-        return Response.ok().entity("{\"message\": \"File uploaded!\"}").build();
+        return Response.ok().entity("{\"message\": \"File has been <lol> uploaded!\"}").build();
     }
 
     @GET
