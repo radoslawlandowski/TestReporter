@@ -4,7 +4,7 @@ pipeline {
     stage('Hello!') {
       steps {
         echo 'Hello!'
-        echo '${env}'
+        echo '"${env}"'
       }
     }
     stage('Git Checkout') {
