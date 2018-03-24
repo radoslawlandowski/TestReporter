@@ -21,7 +21,7 @@ public class TestGroupResource {
     public Response create(TestGroup testGroup) {
         this.testGroupDao.create(testGroup);
 
-        return Response.ok().entity("{\"message\": \"Test group has been created!\"}").build();
+        return Response.ok().entity("{\"message\": \"Group created!\"}").build();
     }
 
     @GET

@@ -2,7 +2,7 @@ version: "3"
 services:
   db:
     # replace username/repo:tag with your name and image details
-    image: tr-db
+    image: tr-db:latest
     deploy:
       replicas: 1
       resources:
@@ -18,12 +18,12 @@ services:
       POSTGRES_PASSWORD: postgres
   api:
     # replace username/repo:tag with your name and image details
-    image: tr-api
+    image: tr-api:latest
     deploy:
       replicas: 1
       resources:
         limits:
-          cpus: "0.5"
+          cpus: "0.8"
           memory: 3000M
       restart_policy:
         condition: on-failure
@@ -31,9 +31,11 @@ services:
       - webnet
     depends_on:
       - db
+    volumes:
+      - ./api:/app
   front:
     # replace username/repo:tag with your name and image details
-    image: tr-fr
+    image: tr-fr:latest
     deploy:
       replicas: 1
       resources:
