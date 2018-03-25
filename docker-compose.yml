@@ -2,7 +2,7 @@ version: "3"
 services:
   db:
     # replace username/repo:tag with your name and image details
-    image: tr-db:latest
+    image: ${DB_IMAGE_NAME:-tr-db:latest}
     deploy:
       replicas: 1
       resources:
@@ -18,7 +18,7 @@ services:
       POSTGRES_PASSWORD: postgres
   api:
     # replace username/repo:tag with your name and image details
-    image: tr-api:latest
+    image: ${API_IMAGE_NAME:-tr-api:latest}
     deploy:
       replicas: 1
       resources:
@@ -35,7 +35,7 @@ services:
       - ./api:/app
   front:
     # replace username/repo:tag with your name and image details
-    image: tr-fr:latest
+    image: ${FR_IMAGE_NAME:-tr-fr:latest}
     deploy:
       replicas: 1
       resources:
