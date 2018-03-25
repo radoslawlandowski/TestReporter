@@ -27,7 +27,7 @@ frImageName=$4
 
 
 # --------- CONFIGURATION --------- 
-healthcheckEndpoint="127.0.0.11:8083/api/test-groups"
+healthcheckEndpoint="127.0.0.1:8083/api/test-groups"
 
 stackEnv="${stackEnv:-prod}"
 fullStackName="tr-$stackEnv"
@@ -65,6 +65,7 @@ fullStackName: $fullStackName
 echoTimed "Main script execution started!"
 echoTimed "Deploying might take a few minutes as images might be downloaded from hub..."
 
+docker swarm init
 docker stack deploy -c $dockerComposeFile $fullStackName
 
 echoTimed "The stack: $fullStackName has been deployed. Starting healthchecks...\n"

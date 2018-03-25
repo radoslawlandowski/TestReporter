@@ -2,11 +2,11 @@
     <div class="row">
 
         <div class="col-2">
-            <h1>Groups:</h1>
+            <h1>Groups: wdwd</h1>
             <div *ngIf="groups && groups.length > 0;else noGroups">
                 <p *ngFor="let group of groups" (click)="setGroup(group)" [ngClass]="{'highlighted': group.id == chosenGroup.id }">{{group.name}}</p>                      
             </div>
-
+asdadasd  ssdsdsds
             <ng-template #noGroups>
                 You have no groups!
             </ng-template>
