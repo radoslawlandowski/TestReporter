@@ -11,7 +11,7 @@ echoTimed() {
 
 # --------- INITIALIZATION --------- 
 
-echoTimed "Make sure you are authenticated into docker via 'docker login' command!"
+echoTimed "Make sure you are authenticated into docker via 'docker login' command and you have port :8083 free to use!"
 
 echoTimed "User input params: 
 stackEnv: $1 
@@ -29,7 +29,7 @@ frImageName=$4
 # --------- CONFIGURATION --------- 
 healthcheckEndpoint="127.0.0.11:8083/api/test-groups"
 
-stackEnv="${stackEnv:-dev}"
+stackEnv="${stackEnv:-prod}"
 fullStackName="tr-$stackEnv"
 
 apiImageName="${apiImageName:-radoslawlandowski/tr-api:0.1.0}"
