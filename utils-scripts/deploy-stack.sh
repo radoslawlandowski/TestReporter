@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# --------- CONFIGURATION --------- 
-stackEnv="prod"
-stackName="tr-$stackEnv"
-
-export API_IMAGE_NAME="radoslawlandowski/tr-api:0.1.0"
-export DB_IMAGE_NAME="radoslawlandowski/tr-db:0.1.0"
-export FR_IMAGE_NAME="radoslawlandowski/tr-fr:0.1.0"
-# --------- /CONFIGURATION --------- 
-
 
 # --------- UTIL FUNCTIONS --------- 
 echoTimed() {
@@ -17,20 +8,67 @@ echoTimed() {
 }
 # --------- /UTIL FUNCTIONS --------- 
 
+
+# --------- INITIALIZATION --------- 
+
+echoTimed "Make sure you are authenticated into docker via 'docker login' command!"
+
+echoTimed "User input params: 
+stackEnv: $1 
+apiImageName: $2 
+dbImageName: $3
+frImageName: $4\n"
+
+stackEnv=$1
+apiImageName=$2
+dbImageName=$3
+frImageName=$4
+# --------- /INITIALIZATION --------- 
+
+
+# --------- CONFIGURATION --------- 
+healthcheckEndpoint="127.0.0.11:8083/api/test-groups"
+
+stackEnv="${stackEnv:-dev}"
+fullStackName="tr-$stackEnv"
+
+apiImageName="${apiImageName:-radoslawlandowski/tr-api:0.1.0}"
+dbImageName="${dbImageName:-radoslawlandowski/tr-db:0.1.0}"
+frImageName="${frImageName:-radoslawlandowski/tr-fr:0.1.0}"
+
+dockerComposeFile="docker-compose.$stackEnv.yml"
+
+if [ ! -f $dockerComposeFile ]; then
+    echoTimed "File $(pwd)/$dockerComposeFile not found!"
+    exit 1
+fi
+
+echoTimed "\nExporting environment variables..."
+export API_IMAGE_NAME=$apiImageName
+export DB_IMAGE_NAME=$dbImageName
+export FR_IMAGE_NAME=$frImageName
+
+echoTimed "Final runtime params: 
+stackEnv: $stackEnv 
+apiImageName: $apiImageName
+dbImageName: $dbImageName
+frImageName: $frImageName
+dockerComposeFile: $dockerComposeFile
+fullStackName: $fullStackName
+"
+
+# --------- /CONFIGURATION --------- 
+
+
 # --------- MAIN SCRIPT --------- 
 
 echoTimed "Main script execution started!"
+echoTimed "Deploying might take a few minutes as images might be downloaded from hub..."
 
-docker pull $API_IMAGE_NAME
-docker pull $DB_IMAGE_NAME
-docker pull $FR_IMAGE_NAME
+docker stack deploy -c $dockerComposeFile $fullStackName
 
-docker stack deploy -c docker-compose.$stackEnv.yml $stackName
+echoTimed "The stack: $fullStackName has been deployed. Starting healthchecks...\n"
 
-echoTimed "The stack: $stackName has been deployed. Initiating healthchecks...\n"
-
-statusCode=""
-healthcheckEndpoint="127.0.0.11:8083/api/test-groups"
 while true; do
     echoTimed "Checking if service responds with code "200" at $healthcheckEndpoint ..."
     response=$(curl --write-out %{http_code} --silent --output /dev/null $healthcheckEndpoint)
@@ -44,7 +82,7 @@ while true; do
 done
 
 echoTimed "\n***************************************
-* Application $stackName started and working! *
+* Application $fullStackName started and working! *
 ***************************************"
 
 # --------- /MAIN SCRIPT --------- 

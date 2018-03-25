@@ -41,7 +41,11 @@ pipeline {
                }
             }             
           }, failFast: true
-
+      }
+    }
+    stage('Deploy stack') {
+      steps {
+        sh "utils-scripts/deploy-stack.sh \"prod\" \"${env.API_IMAGE_NAME}\" \"${env.DB_IMAGE_NAME}\" \"${env.FRONT_IMAGE_NAME}\""
       }
     }
   }
