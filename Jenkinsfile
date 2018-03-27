@@ -60,7 +60,7 @@ pipeline {
         }
       steps {
         sh "docker stack rm tr-${env.STACK_NAME}"
-        sleep 10
+        sleep 30 // stack's network is not cleared right after command execution. Dirty fix - I know.
         sh "docker images -a | grep '${env.BUILD_TAG}' | awk '{print \$3}' | xargs docker rmi -f"
       }
     }
