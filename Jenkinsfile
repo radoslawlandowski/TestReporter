@@ -60,6 +60,7 @@ pipeline {
         }
       steps {
         sh "docker stack rm tr-${env.STACK_NAME}"
+        sleep 10
         sh "docker images -a | grep '${env.BUILD_TAG}' | awk '{print \$3}' | xargs docker rmi -f"
       }
     }
