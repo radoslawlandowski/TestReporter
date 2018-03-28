@@ -1,9 +1,6 @@
-0. Install Vagrant
-1. Setup the VM by running in console: "vagrant up"
-2. Connect to the VM by: "vagrant ssh" (now you are remotely connected to the VM)
-3. Run "cd /vagrant" ('/vagrant' is the folder that is synchronized with the repository folder on your local machine)
-4. run "mvn install"
-5. run "sudo java -jar target/testreporter-1.0.jar server config.yml"
-6. application is hosted at port defined in config.yml file
+0. Install Docker 17.06 or higher
+1. Make sure you have port 8083 free to use
+2. Being in main repository directory run : "sh ./utils-scripts/deploy-stack.sh"
+3. The application should be available at 127.0.0.1:8083
 
 The Postman's Web API calls collection is stored in TestReporter.postman_collection.json. Import it to your Postman to check possible requests.
