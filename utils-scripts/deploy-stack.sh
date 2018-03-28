@@ -32,9 +32,9 @@ healthcheckEndpoint="127.0.0.1:8083/api/test-groups"
 stackEnv="${stackEnv:-prod}"
 fullStackName="tr-$stackEnv"
 
-apiImageName="${apiImageName:-radoslawlandowski/tr-api:0.1.0}"
-dbImageName="${dbImageName:-radoslawlandowski/tr-db:0.1.0}"
-frImageName="${frImageName:-radoslawlandowski/tr-fr:0.1.0}"
+apiImageName="${apiImageName:-radoslawlandowski/tr-api:0.1.1}"
+dbImageName="${dbImageName:-radoslawlandowski/tr-db:0.1.1}"
+frImageName="${frImageName:-radoslawlandowski/tr-fr:0.1.1}"
 
 dockerComposeFile="docker-compose.$stackEnv.yml"
 
