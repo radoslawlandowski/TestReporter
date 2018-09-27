@@ -1,8 +1,6 @@
 import 'rxjs/add/operator/switchMap';
 
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Location }                 from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 import { TestRun } from './test-run'
 import { TestGroupService } from '../test-group/test-group.service'
@@ -13,10 +11,6 @@ import { TestGroupService } from '../test-group/test-group.service'
   styleUrls: ['./test-run.component.css']
 })
 
-export class TestRunComponent implements OnChanges {
+export class TestRunComponent {
     @Input() testRun: TestRun;
-
-    ngOnChanges(changes: SimpleChanges) {
-      this.testRun = changes['testRun'].currentValue;
-    }
 }

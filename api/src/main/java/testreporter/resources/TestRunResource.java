@@ -60,9 +60,9 @@ public class TestRunResource {
         testResults.getAttachments().ifPresent(atts -> attachmentHandler.handleAttachments(testRun, atts));
 
         testRun.setTestGroup(testGroup.get());
-        testRunDao.create(testRun);
+        TestRun createdTestRun = testRunDao.create(testRun);
 
-        return Response.ok().entity("{\"message\": \"File has been <lol> uploaded!\"}").build();
+        return Response.ok().entity(createdTestRun).build();
     }
 
     @GET

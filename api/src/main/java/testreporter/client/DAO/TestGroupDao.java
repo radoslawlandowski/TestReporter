@@ -26,7 +26,7 @@ public class TestGroupDao extends AbstractDAO<TestGroup> {
         return Optional.ofNullable(uniqueResult(namedQuery("TestGroup.findByTestGroupName").setParameter("testGroupName", testGroupName)));
     }
 
-    public long create(TestGroup testRun) {
-        return persist(testRun).getId();
+    public TestGroup create(TestGroup testRun) {
+        return persist(testRun);
     }
 }

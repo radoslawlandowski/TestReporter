@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { catchError, map, tap, combineLatest, mergeMap, merge, withLatestFrom, distinctUntilChanged } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
@@ -14,10 +14,15 @@ import { TestGroup } from './test-group';
 @Injectable()
 export class TestGroupService {
 
-    private testGroupsUrl = `${environment.apiUrl}/test-groups`;  // URL to web api
-    private testRunUrl = `${environment.apiUrl}/test-runs`;  // URL to web api
-    
-    constructor(private http: HttpClient) {}
+    private static TEST_GROUPS_URL = `${environment.apiUrl}/test-groups`;  
+    private static TEST_RUN_URL = `${environment.apiUrl}/test-runs`;
+
+    private testGroupsSource: BehaviorSubject<TestGroup[]> = new BehaviorSubject<TestGroup[]>([]);
+    private testGroups$ : Observable<TestGroup[]> = this.testGroupsSource.asObservable();
+
+    constructor(private http: HttpClient) {
+        this.testGroupsSource.next([]);
+    }
 
     uploadFile(testGroup: String, file: File) {
         let formData:FormData = new FormData();
@@ -31,14 +36,18 @@ export class TestGroupService {
           )
     }
 
-    getTestGroups(): Observable<TestGroup[]> {
-        return this.http.get<TestGroup[]>(this.testGroupsUrl).pipe(
-            catchError(this.handleError('getTestGroups', []))
-          );
+    public getTestGroups() : Observable<TestGroup[]> {
+        return this.testGroups$;
+    }
+
+    fetchTestGroups() {
+        this.http.get<TestGroup[]>(TestGroupService.TEST_GROUPS_URL).subscribe(testGroups => {
+            this.testGroupsSource.next(testGroups);
+        });
     }
 
     getTestGroup(name: string): Observable<TestGroup> {
-        return this.http.get<TestGroup>(this.testGroupsUrl + "/" + name);
+        return this.http.get<TestGroup>(TestGroupService.TEST_GROUPS_URL + "/" + name);
     }
 
     getTestRun(name:string, testRunName: string): Promise<TestRun>  {
@@ -49,10 +58,12 @@ export class TestGroupService {
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');     
         headers.append('Accept', 'application/json');
-        
-        return this.http.post(this.testGroupsUrl, testGroup, {headers: headers}).pipe(
-            catchError(this.handleError('createTestGroup', []))
-        )
+
+        this.http.post(TestGroupService.TEST_GROUPS_URL, testGroup, {headers: headers})
+            .pipe(withLatestFrom(this.testGroupsSource)).subscribe(([newGroup, groups]) => {
+                let updatedGroups = [...groups as TestGroup[], newGroup as TestGroup]
+                this.testGroupsSource.next(updatedGroups);
+        })
     }
 
     private handleError<T> (operation = 'operation', result?: T) {

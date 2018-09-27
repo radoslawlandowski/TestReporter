@@ -24,7 +24,7 @@ public class TestRunDao extends AbstractDAO<TestRun> {
         return list(namedQuery("TestRun.find").setParameter("testGroupName", testGroupName));
     }
 
-    public long create(TestRun testRun) {
-        return persist(testRun).getId();
+    public TestRun create(TestRun testRun) {
+        return persist(testRun);
     }
 }
