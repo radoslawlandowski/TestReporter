@@ -32,7 +32,12 @@ export class TestGroupService {
         headers.append('Accept', 'application/json');
 
         return this.http.post(`${environment.apiUrl}/test-groups/${testGroup}/test-runs`, formData, {headers: headers}).pipe(
-            catchError(this.handleError('getTestGroups', []))
+            withLatestFrom(this.testGroupsSource),
+            tap(([testRun, testGroups]) => {
+                let currentTestGroups = [...testGroups];
+                currentTestGroups.filter(tg => tg.name === testGroup)[0].testRuns.push(testRun as TestRun);
+                this.testGroupsSource.next(currentTestGroups);
+            })
           )
     }
 
