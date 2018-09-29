@@ -35,7 +35,7 @@ export class TestGroupService {
             withLatestFrom(this.testGroupsSource),
             tap(([testRun, testGroups]) => {
                 let currentTestGroups = [...testGroups];
-                currentTestGroups.filter(tg => tg.name === testGroup)[0].testRuns.push(testRun as TestRun);
+                currentTestGroups.find(tg => tg.name === testGroup).testRuns.push(testRun as TestRun);
                 this.testGroupsSource.next(currentTestGroups);
             })
           )
