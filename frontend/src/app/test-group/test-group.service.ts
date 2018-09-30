@@ -48,7 +48,7 @@ export class TestGroupService {
         return this.http.get<TestRun>(`${environment.apiUrl}/test-groups/${testGroup}/test-runs/${id}`).pipe(
             withLatestFrom(this.testGroupsSource),
             tap(([testRun, testGroups]) => this.addTestRunToTestGroups([testRun, testGroups])),
-            map(([testGroups, testRun]) => { return testRun })
+            map(([testRun, testGroups]) => { return testRun })
           );
     }
 
