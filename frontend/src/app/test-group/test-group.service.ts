@@ -35,9 +35,7 @@ export class TestGroupService {
     }
 
     createTestGroup(testGroup: TestGroup) {
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');     
-        headers.append('Accept', 'application/json');
+        let headers = this.buildBasicHeaders();
 
         this.http.post(TestGroupService.TEST_GROUPS_URL, testGroup, {headers: headers})
             .pipe(withLatestFrom(this.testGroupsSource)).subscribe(([newGroup, groups]) => {
@@ -49,18 +47,15 @@ export class TestGroupService {
     fetchTestRunById(id: number, testGroup: string) {
         return this.http.get<TestRun>(`${environment.apiUrl}/test-groups/${testGroup}/test-runs/${id}`).pipe(
             withLatestFrom(this.testGroupsSource),
-            tap(([testRun, testGroups]) => {
-                let currentTestGroups = [...testGroups];
-                currentTestGroups.find(tg => tg.id === testRun.testGroupId).testRuns.push(testRun as TestRun);
-                this.testGroupsSource.next(currentTestGroups);
-            })
+            tap(this.addTestRunToTestGroups),
+            map(([testGroups, testRun]) => { return testRun })
           );
     }
 
     fetchTestGroups() {
-        this.http.get<TestGroup[]>(TestGroupService.TEST_GROUPS_URL).subscribe(testGroups => {
-            this.testGroupsSource.next(testGroups);
-        });
+        return this.http.get<TestGroup[]>(TestGroupService.TEST_GROUPS_URL).pipe(
+            tap(testGroups => { this.testGroupsSource.next(testGroups) }, 
+            map(testGroups => { return testGroups })));
     }
 
     fetchTestGroup(name: string): Observable<TestGroup> {
@@ -69,6 +64,12 @@ export class TestGroupService {
 
     getTestGroups() : Observable<TestGroup[]> {
         return this.testGroups$;
+    }
+
+    private addTestRunToTestGroups([testRun, testGroups]) {
+        let currentTestGroups = [...testGroups];
+        currentTestGroups.find(tg => tg.id === testRun.testGroupId).testRuns.push(testRun as TestRun);
+        this.testGroupsSource.next(currentTestGroups);
     }
 
     private buildFormData(file: File): FormData {
@@ -81,6 +82,14 @@ export class TestGroupService {
     private buildHeadersForFileUpload(): HttpHeaders {
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/form-data');        
+        headers.append('Accept', 'application/json');
+
+        return headers;
+    }
+
+    private buildBasicHeaders(): HttpHeaders {
+        let headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');     
         headers.append('Accept', 'application/json');
 
         return headers;

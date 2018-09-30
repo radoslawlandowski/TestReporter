@@ -29,7 +29,7 @@ export class BrowseDashboardComponent {
       this.groups = testGroups;
     })
 
-    this.testGroupService.fetchTestGroups();
+    this.testGroupService.fetchTestGroups().subscribe();
   }
 
   hasGroups() : boolean {
