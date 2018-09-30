@@ -2,7 +2,7 @@
     background-color: gold;
 }
 
-.test-group-name:hover {
+.selectable-name:hover {
     background-color: gold;
     cursor: pointer;
 }

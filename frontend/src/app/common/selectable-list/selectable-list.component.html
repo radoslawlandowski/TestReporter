@@ -1,0 +1,9 @@
+<div>
+  <div *ngIf="isListEmpty(); else listEmpty">
+      <p class="selectable-name" *ngFor="let name of _names" (click)="setName(name)" [ngClass]="{'highlighted': isNameHighlighted(name)}">{{name}}</p>                      
+  </div>
+  
+  <ng-template #listEmpty>
+    The list is empty!
+  </ng-template>
+</div>

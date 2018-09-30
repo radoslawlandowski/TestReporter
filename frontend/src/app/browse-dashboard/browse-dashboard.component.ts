@@ -17,6 +17,7 @@ export class BrowseDashboardComponent {
 
   groups: TestGroup[] = [];
   groupNames: string[] = [];
+  testRunNames: string[] = [];
   chosenGroup: TestGroup = {id: 1, name: ''};
   chosenRun: TestRun;
   chosenTestCase: TestCase;
@@ -27,7 +28,6 @@ export class BrowseDashboardComponent {
       });
     
     this.testGroupService.getTestGroups().subscribe(testGroups => {
-      console.log(testGroups);
       this.groups = testGroups;
       this.groupNames = this.getTestGroupNames(this.groups);
     })
@@ -39,22 +39,17 @@ export class BrowseDashboardComponent {
     return groups !== undefined ? groups.map(g => g.name) : [];
   }
 
+  getTestRunNames(group: TestGroup) {
+    return group !== undefined ? group.testRuns.map(tr => tr.name) : [];
+  }
+
   chooseTestGroupEvent(testGroupName: string) {
     this.chosenGroup = this.groups.find(g => g.name === testGroupName);
+    this.testRunNames = this.getTestRunNames(this.chosenGroup)
   }
-
-  hasTestRuns() : boolean {
-    return this.chosenGroup && this.chosenGroup.testRuns && this.chosenGroup.testRuns.length > 0;
-  }
-
-  setRun(run) : void {
-    this.chosenRun = run;
-  }
-
-  isRunHighlighted(run): boolean {
-    if(this.chosenRun !== undefined) {
-      return run.id == this.chosenRun.id    
-    }
+ 
+  chooseTestRunEvent(testRunName: string) {
+    this.chosenRun = this.chosenGroup.testRuns.find(tr => tr.name === testRunName);
   }
 }
 
