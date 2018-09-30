@@ -31,7 +31,6 @@ public class AttachmentHandler {
         return testRun;
     }
 
-
     public List<File> findByName(List<File> files, String filename) {
         return files.stream().filter(file -> file.getFileName().equals(filename)).collect(Collectors.toList());
     }

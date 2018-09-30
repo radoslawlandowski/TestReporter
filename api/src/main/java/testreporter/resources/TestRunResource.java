@@ -62,7 +62,7 @@ public class TestRunResource {
         testRun.setTestGroup(testGroup.get());
         TestRun createdTestRun = testRunDao.create(testRun);
 
-        return Response.ok().entity(createdTestRun).build();
+        return Response.ok().entity(createdTestRun.getId()).build();
     }
 
     @GET
@@ -71,6 +71,15 @@ public class TestRunResource {
     @UnitOfWork
     public List<TestRun> get(@PathParam("testGroupName") String testGroupName) {
         return testRunDao.findByGroupName(testGroupName);
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Timed
+    @UnitOfWork
+    public TestRun getById(@PathParam("id") int id) {
+        return testRunDao.getById(id);
     }
 
 }

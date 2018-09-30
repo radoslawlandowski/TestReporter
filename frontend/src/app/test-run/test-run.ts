@@ -8,6 +8,7 @@ export class TestRun {
     testCaseCount: number;
     result: TestCaseResult;
     time: number;
+    testGroupId: number;
     total: number;
     passed: number;
     failed: number;

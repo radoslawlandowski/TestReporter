@@ -59,8 +59,14 @@ public class TestRun implements Serializable {
     @JsonBackReference
     TestGroup testGroup;
 
+    Long testGroupId;
+
     @OneToOne(targetEntity=TestSuite.class, cascade = CascadeType.ALL)
     TestSuite testSuite;
+
+    public int getTestGroupId() {
+        return testGroup.getId();
+    }
 
     public int getId() {
         return id;

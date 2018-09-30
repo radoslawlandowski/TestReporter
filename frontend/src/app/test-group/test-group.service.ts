@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap, combineLatest, mergeMap, merge, withLatestFrom, distinctUntilChanged } from 'rxjs/operators';
+import { catchError, map, tap, combineLatest, mergeMap, merge, withLatestFrom, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
@@ -10,12 +10,12 @@ import { TestCaseResult } from '../test-case/test-case-result/test-case-result';
 import { TestSuite } from '../test-suite/test-suite';
 import { TestRun } from '../test-run/test-run';
 import { TestGroup } from './test-group';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class TestGroupService {
 
     private static TEST_GROUPS_URL = `${environment.apiUrl}/test-groups`;  
-    private static TEST_RUN_URL = `${environment.apiUrl}/test-runs`;
 
     private testGroupsSource: BehaviorSubject<TestGroup[]> = new BehaviorSubject<TestGroup[]>([]);
     private testGroups$ : Observable<TestGroup[]> = this.testGroupsSource.asObservable();
@@ -24,39 +24,14 @@ export class TestGroupService {
         this.testGroupsSource.next([]);
     }
 
-    uploadFile(testGroup: String, file: File) {
-        let formData:FormData = new FormData();
-        formData.append('file', file, file.name);
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/form-data');        
-        headers.append('Accept', 'application/json');
+    uploadFile(testGroupName: string, file: File) {
+        let formData: FormData = this.buildFormData(file);
+        let headers: HttpHeaders = this.buildHeadersForFileUpload();
 
-        return this.http.post(`${environment.apiUrl}/test-groups/${testGroup}/test-runs`, formData, {headers: headers}).pipe(
-            withLatestFrom(this.testGroupsSource),
-            tap(([testRun, testGroups]) => {
-                let currentTestGroups = [...testGroups];
-                currentTestGroups.find(tg => tg.name === testGroup).testRuns.push(testRun as TestRun);
-                this.testGroupsSource.next(currentTestGroups);
-            })
-          )
-    }
-
-    public getTestGroups() : Observable<TestGroup[]> {
-        return this.testGroups$;
-    }
-
-    fetchTestGroups() {
-        this.http.get<TestGroup[]>(TestGroupService.TEST_GROUPS_URL).subscribe(testGroups => {
-            this.testGroupsSource.next(testGroups);
-        });
-    }
-
-    getTestGroup(name: string): Observable<TestGroup> {
-        return this.http.get<TestGroup>(TestGroupService.TEST_GROUPS_URL + "/" + name);
-    }
-
-    getTestRun(name:string, testRunName: string): Promise<TestRun>  {
-        return Promise.resolve([].find(group => group.name === name).testRuns.find(testRun => testRun.name === testRunName));
+        return this.http.post(`${environment.apiUrl}/test-groups/${testGroupName}/test-runs`, formData, {headers: headers})
+            .pipe(switchMap((testRunId: number) => {
+                return this.fetchTestRunById(testRunId, testGroupName);
+            }), catchError(val => of(`Uploading test run file failed!`)))
     }
 
     createTestGroup(testGroup: TestGroup) {
@@ -69,6 +44,46 @@ export class TestGroupService {
                 let updatedGroups = [...groups as TestGroup[], newGroup as TestGroup]
                 this.testGroupsSource.next(updatedGroups);
         })
+    }
+
+    fetchTestRunById(id: number, testGroup: string) {
+        return this.http.get<TestRun>(`${environment.apiUrl}/test-groups/${testGroup}/test-runs/${id}`).pipe(
+            withLatestFrom(this.testGroupsSource),
+            tap(([testRun, testGroups]) => {
+                let currentTestGroups = [...testGroups];
+                currentTestGroups.find(tg => tg.id === testRun.testGroupId).testRuns.push(testRun as TestRun);
+                this.testGroupsSource.next(currentTestGroups);
+            })
+          );
+    }
+
+    fetchTestGroups() {
+        this.http.get<TestGroup[]>(TestGroupService.TEST_GROUPS_URL).subscribe(testGroups => {
+            this.testGroupsSource.next(testGroups);
+        });
+    }
+
+    fetchTestGroup(name: string): Observable<TestGroup> {
+        return this.http.get<TestGroup>(`${TestGroupService.TEST_GROUPS_URL}/${name}`);
+    }
+
+    getTestGroups() : Observable<TestGroup[]> {
+        return this.testGroups$;
+    }
+
+    private buildFormData(file: File): FormData {
+        let formData: FormData = new FormData();
+        formData.append('file', file, file.name);
+
+        return formData;
+    }
+
+    private buildHeadersForFileUpload(): HttpHeaders {
+        let headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/form-data');        
+        headers.append('Accept', 'application/json');
+
+        return headers;
     }
 
     private handleError<T> (operation = 'operation', result?: T) {

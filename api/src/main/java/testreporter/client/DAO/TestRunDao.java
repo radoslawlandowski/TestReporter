@@ -27,4 +27,8 @@ public class TestRunDao extends AbstractDAO<TestRun> {
     public TestRun create(TestRun testRun) {
         return persist(testRun);
     }
+
+    public TestRun getById(int id) {
+        return get(id);
+    }
 }
