@@ -27,9 +27,10 @@ export class BrowseDashboardComponent {
         this.chosenTestCase = testCase;
       });
     
-    this.testGroupService.getTestGroups().subscribe(testGroups => {
+    this.testGroupService.testGroups$.subscribe(testGroups => {
       this.groups = testGroups;
       this.groupNames = this.getTestGroupNames(this.groups);
+      this.chooseTestGroupEvent(this.chosenGroup !== undefined ? this.chosenGroup.name : "");
     })
 
     this.testGroupService.fetchTestGroups().subscribe();

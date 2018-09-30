@@ -18,7 +18,7 @@ export class TestGroupService {
     private static TEST_GROUPS_URL = `${environment.apiUrl}/test-groups`;  
 
     private testGroupsSource: BehaviorSubject<TestGroup[]> = new BehaviorSubject<TestGroup[]>([]);
-    private testGroups$ : Observable<TestGroup[]> = this.testGroupsSource.asObservable();
+    public testGroups$ : Observable<TestGroup[]> = this.testGroupsSource.asObservable();
 
     constructor(private http: HttpClient) {
         this.testGroupsSource.next([]);
@@ -47,7 +47,7 @@ export class TestGroupService {
     fetchTestRunById(id: number, testGroup: string) {
         return this.http.get<TestRun>(`${environment.apiUrl}/test-groups/${testGroup}/test-runs/${id}`).pipe(
             withLatestFrom(this.testGroupsSource),
-            tap(this.addTestRunToTestGroups),
+            tap(([testRun, testGroups]) => this.addTestRunToTestGroups([testRun, testGroups])),
             map(([testGroups, testRun]) => { return testRun })
           );
     }
