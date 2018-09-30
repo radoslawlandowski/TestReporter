@@ -1,7 +1,6 @@
 import { TestCaseResult } from '../test-case/test-case-result/test-case-result'
 import { TestSuite } from '../test-suite/test-suite'
 
-
 export class TestRun {
     id: number;
     name: string;
@@ -9,6 +8,7 @@ export class TestRun {
     testCaseCount: number;
     result: TestCaseResult;
     time: number;
+    testGroupId: number;
     total: number;
     passed: number;
     failed: number;

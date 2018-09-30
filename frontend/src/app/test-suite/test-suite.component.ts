@@ -11,16 +11,11 @@ import { ChoiceTrackerService } from '../auxiliary/choice-tracker/choice-tracker
   styleUrls: ['./test-suite.component.css']
 })
 
-export class TestSuiteComponent implements OnChanges {
+export class TestSuiteComponent {
     @Input() testSuite: TestSuite;
     @Input() chosenResult: TestCaseResult;
 
     constructor(private choiceTrackerService: ChoiceTrackerService) {}
-
-    ngOnChanges(changes: SimpleChanges) {
-      this.testSuite = changes['testSuite'].currentValue;
-      this.chosenResult = changes['chosenResult'].currentValue;
-    }
 
     setCurrentTestCase(testCase): void {
       this.choiceTrackerService.chooseTestCase(testCase);

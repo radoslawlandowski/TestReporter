@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "test_group")
@@ -34,7 +35,7 @@ public class TestGroup implements Serializable {
     @Column
     @OneToMany(targetEntity = TestRun.class, mappedBy = "testGroup", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    List<TestRun> testRuns;
+    List<TestRun> testRuns = new ArrayList<>();
 
     public int getId() {
         return id;

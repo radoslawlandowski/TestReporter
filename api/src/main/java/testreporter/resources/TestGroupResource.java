@@ -19,9 +19,9 @@ public class TestGroupResource {
     @Timed
     @UnitOfWork
     public Response create(TestGroup testGroup) {
-        this.testGroupDao.create(testGroup);
+        TestGroup createdGroup = this.testGroupDao.create(testGroup);
 
-        return Response.ok().entity("{\"message\": \"Group created!\"}").build();
+        return Response.ok().entity(createdGroup).build();
     }
 
     @GET

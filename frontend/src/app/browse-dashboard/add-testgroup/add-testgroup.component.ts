@@ -24,9 +24,6 @@ export class AddTestgroupComponent {
   }
 
   create() {
-    this.testGroupService.createTestGroup(new TestGroup(this.groupName)).subscribe(res => {
-      console.log(res)
-      this.groupName = (res as ApiResponse).message;
-    });
+    this.testGroupService.createTestGroup(new TestGroup(this.groupName))
   }
 }
