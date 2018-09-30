@@ -22,7 +22,8 @@ import { AddTestgroupComponent } from './browse-dashboard/add-testgroup/add-test
 import { TestGroupService } from './test-group/test-group.service';
 import { ChoiceTrackerService } from './auxiliary/choice-tracker/choice-tracker.service';
 
-import { ResultPipe } from './auxiliary/result.pipe'
+import { ResultPipe } from './auxiliary/result.pipe';
+import { TestGroupListComponent } from './test-group/test-group-list/test-group-list.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/browse', pathMatch: 'full' },  
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     PropertyComponent,
     AddTestrunComponent,
     AddTestgroupComponent,
-    ResultPipe
+    ResultPipe,
+    TestGroupListComponent
   ],
   imports: [
     BrowserModule,

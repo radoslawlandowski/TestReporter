@@ -6,8 +6,3 @@ tr:hover {
     background-color: aliceblue;
     cursor: pointer;
 }
-
-p:hover {
-    background-color: gold;
-    cursor: pointer;
-}

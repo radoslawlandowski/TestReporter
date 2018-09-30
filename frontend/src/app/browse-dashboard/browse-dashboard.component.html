@@ -1,14 +1,7 @@
 <div class="container-fluid"> 
     <div class="row">
         <div class="col-2">
-            <h1>Groups: </h1>
-            <div *ngIf="hasGroups(); else noGroups">
-                <p *ngFor="let group of groups" (click)="setGroup(group)" [ngClass]="{'highlighted': isGroupHighlighted(group) }">{{group.name}}</p>                      
-            </div>
-
-            <ng-template #noGroups>
-                You have no groups yet!
-            </ng-template>
+            <test-group-list [testGroupNames]="groupNames" (chooseGroup)="chooseTestGroupEvent($event)" ></test-group-list>
 
             <p>
                 <add-testgroup></add-testgroup>                
@@ -16,10 +9,8 @@
 
             <h1>Test Runs:</h1>
             <div *ngIf="hasTestRuns(); else noRuns">
-                <p *ngFor="let run of chosenGroup.testRuns" (click)="setRun(run)" [ngClass]="{'highlighted': isRunHighlighted(run) }">{{run.name}}</p> 
-                
+                <p *ngFor="let run of chosenGroup.testRuns" (click)="setRun(run)" [ngClass]="{'highlighted': isRunHighlighted(run)}">{{run.name}}</p> 
                 <hr>
-
             </div>
 
             <ng-template #noRuns>No runs :(</ng-template>            

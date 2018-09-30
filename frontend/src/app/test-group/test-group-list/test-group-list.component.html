@@ -1,0 +1,10 @@
+<div>
+  <h1>Groups: </h1>
+  <div *ngIf="hasGroupNames(); else noGroups">
+      <p class="test-group-name" *ngFor="let groupName of _testGroupNames" (click)="setGroupName(groupName)" [ngClass]="{'highlighted': isGroupNameHighlighted(groupName)}">{{groupName}}</p>                      
+  </div>
+  
+  <ng-template #noGroups>
+    You have no groups yet!
+  </ng-template>
+</div>

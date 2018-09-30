@@ -15,7 +15,8 @@ import { TestRun } from '../test-run/test-run';
 
 export class BrowseDashboardComponent {
 
-  groups: TestGroup[] = []; 
+  groups: TestGroup[] = [];
+  groupNames: string[] = [];
   chosenGroup: TestGroup = {id: 1, name: ''};
   chosenRun: TestRun;
   chosenTestCase: TestCase;
@@ -26,52 +27,28 @@ export class BrowseDashboardComponent {
       });
     
     this.testGroupService.getTestGroups().subscribe(testGroups => {
+      console.log(testGroups);
       this.groups = testGroups;
+      this.groupNames = this.getTestGroupNames(this.groups);
     })
 
     this.testGroupService.fetchTestGroups().subscribe();
   }
 
-  hasGroups() : boolean {
-    return this.groups && this.groups.length > 0;
+  getTestGroupNames(groups: TestGroup[]) {
+    return groups !== undefined ? groups.map(g => g.name) : [];
+  }
+
+  chooseTestGroupEvent(testGroupName: string) {
+    this.chosenGroup = this.groups.find(g => g.name === testGroupName);
   }
 
   hasTestRuns() : boolean {
     return this.chosenGroup && this.chosenGroup.testRuns && this.chosenGroup.testRuns.length > 0;
   }
 
-  getGroups() : any {
-    return this.groups;
-  }
-
-  getChosenGroup() : any {
-    return this.chosenGroup;
-  }
-
-  setChosenRun(chosenRun) : void {
-    this.chosenRun = chosenRun;
-  }
-
-  setChosenGroup(chosenGroup) : void {
-    this.chosenGroup = chosenGroup;
-  }
-
-  setGroups(groups) : void {
-    this.groups = groups;
-  }
-
-  setGroup(group) : void {
-    this.chosenGroup = group;
-  }
-
   setRun(run) : void {
     this.chosenRun = run;
-  }
-
-  isGroupHighlighted(group): boolean {
-    if(this.chosenGroup !== undefined) {
-      return group.id == this.chosenGroup.id
-    }
   }
 
   isRunHighlighted(run): boolean {

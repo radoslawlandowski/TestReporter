@@ -1,0 +1,8 @@
+.highlighted {
+    background-color: gold;
+}
+
+.test-group-name:hover {
+    background-color: gold;
+    cursor: pointer;
+}
