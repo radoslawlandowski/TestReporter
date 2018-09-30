@@ -23,11 +23,6 @@ export class TestGroupListComponent {
 
   isGroupNameHighlighted(groupName): boolean {
     if(this.chosenGroupName !== undefined) {
-      console.log("====");
-      console.log(groupName);
-      console.log(this.chosenGroupName);
-      console.log(groupName === this.chosenGroupName);
-      
       return groupName === this.chosenGroupName
     }
   }
