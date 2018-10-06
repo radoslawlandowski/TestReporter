@@ -1,5 +1,8 @@
 package attachments.controller;
 
+import attachments.model.Attachment;
+import attachments.repository.AttachmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,9 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AttachmentController {
 
+    @Autowired
+    AttachmentRepository repository;
+
     @RequestMapping(value = "/attachments", method = RequestMethod.GET)
-    public String byId() {
-        return "Greetings from Spring Boot!";
+    public Attachment byId() {
+        Attachment a = new Attachment();
+
+        return repository.save(a);
     }
 
 }
@@ -28,7 +36,7 @@ public class AttachmentController {
 //
 //        return Response.ok(f.getData())
 //                .header(HttpHeaders.CONTENT_DISPOSITION,
-//                        String.format("attachment; filename=\"%s\"", f.getFileName()))
+//                        String.format("attachment; filename=\"%s\"", f.getAttachmentName()))
 //                .build();
 //    }
 //
