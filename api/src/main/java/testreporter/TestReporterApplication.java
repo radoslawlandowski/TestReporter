@@ -1,26 +1,12 @@
 package testreporter;
 
 import io.dropwizard.Application;
-import io.dropwizard.db.DataSourceFactory;
-import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import ru.vyarus.dropwizard.guice.GuiceBundle;
-import testreporter.client.DAO.AttachmentDao;
-import testreporter.client.DAO.TestGroupDao;
-import testreporter.client.DAO.TestRunDao;
-import testreporter.core.services.handler.AttachmentHandler;
-import testreporter.core.services.handler.UploadedTestResultsHandler;
-import testreporter.core.services.deserializer.TestRunDeserializer;
-import testreporter.core.models.*;
-import testreporter.core.services.unzipper.FileUnzipper;
-import testreporter.core.services.validator.UploadedFilesValidator;
 import testreporter.resources.AttachmentResource;
-import testreporter.resources.filters.CORSFIlter;
-import testreporter.resources.TestRunResource;
-import testreporter.resources.TestGroupResource;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;

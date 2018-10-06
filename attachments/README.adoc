@@ -43,21 +43,21 @@ NOTE: Spring Boot doesn't generate code or make edits to your files. Instead, wh
 == Create a simple web application
 Now you can create a web controller for a simple web application.
 
-`src/main/java/hello/HelloController.java`
+`src/main/java/attachments/HelloController.java`
 [source,java]
 ----
-include::initial/src/main/java/hello/HelloController.java[]
+include::initial/src/main/java/attachments/HelloController.java[]
 ----
 
 The class is flagged as a `@RestController`, meaning it's ready for use by Spring MVC to handle web requests. `@RequestMapping` maps `/` to the `index()` method. When invoked from a browser or using curl on the command line, the method returns pure text. That's because `@RestController` combines `@Controller` and `@ResponseBody`, two annotations that results in web requests returning data rather than a view.
 
-== Create an Application class
-Here you create an `Application` class with the components:
+== Create an attachments.Application class
+Here you create an `attachments.Application` class with the components:
 
-`src/main/java/hello/Application.java`
+`src/main/java/attachments/attachments.Application.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/Application.java[]
+include::complete/src/main/java/attachments/attachments.Application.java[]
 ----
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/spring-boot-application.adoc[]
@@ -148,20 +148,20 @@ include::complete/pom.xml[tag=tests]
 
 Now write a simple unit test that mocks the servlet request and response through your endpoint:
 
-`src/test/java/hello/HelloControllerTest.java`
+`src/test/java/attachments/HelloControllerTest.java`
 [source,java]
 ----
-include::complete/src/test/java/hello/HelloControllerTest.java[]
+include::complete/src/test/java/attachments/HelloControllerTest.java[]
 ----
 
 The `MockMvc` comes from Spring Test and allows you, via a set of convenient builder classes, to send HTTP requests into the `DispatcherServlet` and make assertions about the result. Note the use of the `@AutoConfigureMockMvc` together with `@SpringBootTest` to inject a `MockMvc` instance. Having used `@SpringBootTest` we are asking for the whole application context to be created.  An alternative would be to ask Spring Boot to create only the web layers of the context using the `@WebMvcTest`. Spring Boot automatically tries to locate the main application class of your application in either case, but you can override it, or narrow it down, if you want to build something different.
 
 As well as mocking the HTTP request cycle we can also use Spring Boot to write a very simple full-stack integration test. For example, instead of (or as well as) the mock test above we could do this:
 
-`src/test/java/hello/HelloControllerIT.java`
+`src/test/java/attachments/HelloControllerIT.java`
 [source,java]
 ----
-include::complete/src/test/java/hello/HelloControllerIT.java[]
+include::complete/src/test/java/attachments/HelloControllerIT.java[]
 ----
 
 The embedded server is started up on a random port by virtue of the `webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT` and the actual port is discovered at runtime with the `@LocalServerPort`.
@@ -287,7 +287,7 @@ if you want to dig deeper.
 
 The following guides may also be helpful:
 
-* https://spring.io/guides/gs/securing-web/[Securing a Web Application]
+* https://spring.io/guides/gs/securing-web/[Securing a Web attachments.Application]
 * https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC]
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/footer.adoc[]
