@@ -18,11 +18,13 @@ import { TestCaseResultBadgeComponent } from './test-case/test-case-result/test-
 import { PropertyComponent } from './property/property.component';
 import { AddTestrunComponent } from './browse-dashboard/add-testrun/add-testrun.component';
 import { AddTestgroupComponent } from './browse-dashboard/add-testgroup/add-testgroup.component';
+import { SelectableListComponent } from './common/selectable-list/selectable-list.component';
 
 import { TestGroupService } from './test-group/test-group.service';
 import { ChoiceTrackerService } from './auxiliary/choice-tracker/choice-tracker.service';
 
-import { ResultPipe } from './auxiliary/result.pipe'
+import { ResultPipe } from './auxiliary/result.pipe';
+
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/browse', pathMatch: 'full' },  
@@ -46,7 +48,8 @@ const appRoutes: Routes = [
     PropertyComponent,
     AddTestrunComponent,
     AddTestgroupComponent,
-    ResultPipe
+    ResultPipe,
+    SelectableListComponent
   ],
   imports: [
     BrowserModule,

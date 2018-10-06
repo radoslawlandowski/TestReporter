@@ -24,6 +24,8 @@ export class AddTestgroupComponent {
   }
 
   create() {
-    this.testGroupService.createTestGroup(new TestGroup(this.groupName))
+    if(this.groupName && this.groupName.length > 2) {
+      this.testGroupService.createTestGroup(new TestGroup(this.groupName))
+    }
   }
 }

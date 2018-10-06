@@ -1,0 +1,8 @@
+.highlighted {
+    background-color: gold;
+}
+
+.selectable-name:hover {
+    background-color: gold;
+    cursor: pointer;
+}
