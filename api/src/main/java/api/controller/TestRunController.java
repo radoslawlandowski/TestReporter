@@ -31,7 +31,7 @@ public class TestRunController {
 
     @RequestMapping(value = "/test-groups/{testGroupName}/test-runs/{id}",
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity byId(@PathVariable("id") int id) {
 
         return ResponseEntity.status(HttpStatus.OK).body(testRunRepository.findById(id));
