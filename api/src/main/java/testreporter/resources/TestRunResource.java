@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.inject.Inject;
 import io.dropwizard.hibernate.UnitOfWork;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.apache.http.client.HttpClient;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import testreporter.client.DAO.TestGroupDao;
@@ -32,6 +33,7 @@ public class TestRunResource {
     @Inject private TestRunDeserializer testRunDeserializer;
     @Inject private UploadedTestResultsHandler uploadedTestResultsHandler;
     @Inject private AttachmentHandler attachmentHandler;
+
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)

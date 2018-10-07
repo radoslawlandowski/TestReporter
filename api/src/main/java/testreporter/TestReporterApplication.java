@@ -1,6 +1,9 @@
 package testreporter;
 
+import com.google.inject.Guice;
 import io.dropwizard.Application;
+import io.dropwizard.client.JerseyClientBuilder;
+import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
@@ -10,6 +13,7 @@ import testreporter.resources.AttachmentResource;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import javax.ws.rs.client.Client;
 import java.util.EnumSet;
 
 public class TestReporterApplication extends Application<TestReporterConfiguration> {
@@ -51,6 +55,11 @@ public class TestReporterApplication extends Application<TestReporterConfigurati
         cors.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
 
         // Add URL mapping
-        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");    }
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
+        final Client client = new JerseyClientBuilder(environment).using(new JerseyClientConfiguration())
+                .build(getName());
+        environment.jersey().register(new ExternalServiceResource(client));
+    }
 
 }
