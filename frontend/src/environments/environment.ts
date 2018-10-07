@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   apiUrl: "http://localhost:11112/api",
-  attachmentsUrl: "http://localhost:11113"
+  attachmentsUrl: "http://localhost:11113/attachments"
 };

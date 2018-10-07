@@ -61,7 +61,7 @@ public class AttachmentHandler {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Integer> response = restTemplate.postForEntity("http://localhost:11113/attachments",
+        ResponseEntity<Integer> response = restTemplate.postForEntity("http://localhost:11113/attachments/attachments",
                 requestEntity, Integer.class);
 
         return response.getBody();
