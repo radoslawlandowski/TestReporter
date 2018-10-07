@@ -38,9 +38,9 @@ public class TestRunController {
 
     @RequestMapping(value = "/test-groups/{testGroupName}/test-runs",
             method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity upload(@RequestParam("testGroupName") String testGroupName,
+    public ResponseEntity upload(@PathVariable("testGroupName") String testGroupName,
             @RequestParam("file") MultipartFile file) throws Exception {
         Optional<TestGroup> testGroup = Optional.ofNullable(testGroupRepository.findByName(testGroupName));
 
@@ -55,7 +55,7 @@ public class TestRunController {
 
         TestRun testRun = testRunDeserializer.deserialize(testResults.getXmlFile().getData());
 
-       // testResults.getAttachments().ifPresent(atts -> attachmentHandler.handleAttachments(testRun, atts));
+        //testResults.getAttachments().ifPresent(atts -> attachmentHandler.handleAttachments(testRun, atts));
 
         testRun.setTestGroup(testGroup.get());
         TestRun createdTestRun = testRunRepository.save(testRun);
