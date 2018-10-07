@@ -27,17 +27,12 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
-    // tag::actuator[]
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.3.6.Final'
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile 'org.postgresql:postgresql'
-// https://mvnrepository.com/artifact/commons-io/commons-io
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
-    // end::actuator[]
-    // tag::tests[]
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    // end::tests[]
 }
 

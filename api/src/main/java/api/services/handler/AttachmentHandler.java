@@ -5,6 +5,7 @@ import api.model.models.File;
 import api.model.models.TestCase;
 import api.model.models.TestRun;
 import api.services.filter.TestCaseFilterManager;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 public class AttachmentHandler {
 
     public final static String ATTACHMENT_PROPERTY_NAME = "Attachment";
+
+    @Value("${applicationSettings.attachmentsUrl}")
+    private String attachmentsUrl;
 
     public TestRun handleAttachments(TestRun testRun, List<File> attachments) {
         List<TestCase> testCasesWithAttachments = new TestCaseFilterManager(testRun)
@@ -61,7 +65,7 @@ public class AttachmentHandler {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Integer> response = restTemplate.postForEntity("http://localhost:11113/attachments/attachments",
+        ResponseEntity<Integer> response = restTemplate.postForEntity(attachmentsUrl + "/attachments",
                 requestEntity, Integer.class);
 
         return response.getBody();
