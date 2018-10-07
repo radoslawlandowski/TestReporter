@@ -17,6 +17,7 @@ public class AttachmentController {
     @Autowired
     AttachmentRepository repository;
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/attachments/{fileId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

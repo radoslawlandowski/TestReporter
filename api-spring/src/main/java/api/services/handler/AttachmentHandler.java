@@ -32,8 +32,9 @@ public class AttachmentHandler {
                             .stream()
                             .filter(property -> property.getName().equals(ATTACHMENT_PROPERTY_NAME))
                             .forEach(property -> {
-                                this.sendAttachment(findByName(attachments, property.getValue()).get(0));
-                                property.setFile(findByName(attachments, property.getValue()).get(0));
+                                File f = findByName(attachments, property.getValue()).get(0);
+                                Integer attachmentId = this.sendAttachment(f);
+                                property.setValue(attachmentId.toString());
                             });
                 });
 
@@ -44,7 +45,7 @@ public class AttachmentHandler {
         return files.stream().filter(file -> file.getFileName().equals(filename)).collect(Collectors.toList());
     }
 
-    private void sendAttachment(File file) {
+    private Integer sendAttachment(File file) {
 
         MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
         ByteArrayResource bar = new ByteArrayResource(file.getData()) {
@@ -62,5 +63,7 @@ public class AttachmentHandler {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Integer> response = restTemplate.postForEntity("http://localhost:11113/attachments",
                 requestEntity, Integer.class);
+
+        return response.getBody();
     }
 }

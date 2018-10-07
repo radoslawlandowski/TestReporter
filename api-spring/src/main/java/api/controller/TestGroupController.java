@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController()
+@CrossOrigin(origins = "*")
 public class TestGroupController {
 
     @Autowired

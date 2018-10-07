@@ -17,13 +17,11 @@ export class PropertyComponent implements OnInit {
   imageToShow: any;  
   downloadStatus: any;
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     if(this.isImage()) {
-        this.getImageFromService(this.property.resultFile_fk)    
+        this.getImageFromService(this.property.value)    
     }
   }
 
@@ -31,19 +29,19 @@ export class PropertyComponent implements OnInit {
     return this.property.name === "Attachment";
   }
 
-    getImageFromService(imageId: Number) {
-      this.downloadStatus = "Downloading the image..."
-      return this.getImage(imageId).subscribe(data => {
-        this.downloadStatus = "Image donwloaded!"      
-        return this.createImageFromBlob(data);
-      }, error => {
-        console.log(error); 
-        this.downloadStatus = "Image download failed!"            
-      });
+  getImageFromService(imageId: string) {
+    this.downloadStatus = "Downloading the image..."
+    return this.getImage(imageId).subscribe(data => {
+      this.downloadStatus = "Image donwloaded!"      
+      return this.createImageFromBlob(data);
+    }, error => {
+      console.log(error); 
+      this.downloadStatus = "Image download failed!"            
+    });
   }
   
-  getImage(imageId: Number): Observable<Blob> {
-      return this.http.get(`${environment.apiUrl}/attachments?fileId=${imageId}`, { responseType: 'blob' });
+  getImage(imageId: string): Observable<Blob> {
+      return this.http.get(`${environment.attachmentsUrl}/attachments/${imageId}`, { responseType: 'blob' });
   }
 
   createImageFromBlob(image: Blob) {
