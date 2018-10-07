@@ -31,7 +31,7 @@ public class AttachmentController {
 
     @RequestMapping(value = "/attachments",
             method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Integer> upload(@RequestParam("file") MultipartFile file) throws IOException {
         Attachment a = new Attachment();

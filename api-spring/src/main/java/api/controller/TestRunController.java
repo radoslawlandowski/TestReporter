@@ -55,7 +55,7 @@ public class TestRunController {
 
         TestRun testRun = testRunDeserializer.deserialize(testResults.getXmlFile().getData());
 
-        //testResults.getAttachments().ifPresent(atts -> attachmentHandler.handleAttachments(testRun, atts));
+        testResults.getAttachments().ifPresent(atts -> attachmentHandler.handleAttachments(testRun, atts));
 
         testRun.setTestGroup(testGroup.get());
         TestRun createdTestRun = testRunRepository.save(testRun);

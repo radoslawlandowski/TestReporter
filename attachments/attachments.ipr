@@ -7,18 +7,44 @@
       <entry name="!?*.groovy" />
       <entry name="!?*.java" />
     </wildcardResourcePatterns>
+    <bytecodeTargetLevel>
+      <module name="attachments_main" target="1.8" />
+      <module name="attachments_test" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
   <component name="InspectionProjectProfileManager">
     <profile version="1.0">
       <option name="myName" value="Project Default" />
     </profile>
     <version value="1.0" />
   </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/TestReporter-attachments.iml" filepath="$PROJECT_DIR$/TestReporter-attachments.iml" />
+      <module fileurl="file://$PROJECT_DIR$/attachments.iml" filepath="$PROJECT_DIR$/attachments.iml" />
+      <module fileurl="file://$PROJECT_DIR$/attachments_main.iml" filepath="$PROJECT_DIR$/attachments_main.iml" group="attachments" />
+      <module fileurl="file://$PROJECT_DIR$/attachments_test.iml" filepath="$PROJECT_DIR$/attachments_test.iml" group="attachments" />
+    </modules>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="libraryTable">
