@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:11114/api"
+  apiUrl: "http://localhost:11112/api",
+  attachmentsUrl: "http://localhost:11113/attachments"
 };

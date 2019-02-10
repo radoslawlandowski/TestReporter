@@ -5,3 +5,8 @@ api/target
 dependency-reduced-pom.xml
 frontend/node_modules/
 frontend/dist/
+attachments/.gradle/
+attachments/build/
+attachments/attachments\.ipr
+
+attachments/attachments\.iws
