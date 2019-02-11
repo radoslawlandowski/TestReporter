@@ -21,10 +21,9 @@ import { AddTestgroupComponent } from './browse-dashboard/add-testgroup/add-test
 import { SelectableListComponent } from './common/selectable-list/selectable-list.component';
 
 import { TestGroupService } from './test-group/test-group.service';
-import { ChoiceTrackerService } from './auxiliary/choice-tracker/choice-tracker.service';
+import { BrowseDashboardStateService } from './auxiliary/browse-dashboard-state/browse-dashobard-state.service';
 
 import { ResultPipe } from './auxiliary/result.pipe';
-
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/browse', pathMatch: 'full' },  
@@ -55,13 +54,10 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     NgbModule.forRoot(),
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: false } // <-- debugging purposes only
-    ),
+    RouterModule.forRoot(appRoutes),
     HttpClientModule
   ],
-  providers: [TestGroupService, ChoiceTrackerService],
+  providers: [TestGroupService, BrowseDashboardStateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

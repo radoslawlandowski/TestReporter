@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TestCase } from '../test-case/test-case'
 
 import { TestGroupService } from '../test-group/test-group.service'
-import { ChoiceTrackerService } from '../auxiliary/choice-tracker/choice-tracker.service';
+import { BrowseDashboardStateService } from '../auxiliary/browse-dashboard-state/browse-dashobard-state.service';
 import { TestGroup } from '../test-group/test-group';
 import { TestRun } from '../test-run/test-run';
 
@@ -23,9 +23,9 @@ export class BrowseDashboardComponent {
   chosenTestCase: TestCase;
 
   constructor(private testGroupService: TestGroupService,
-      private choiceTrackerService: ChoiceTrackerService) { 
-    choiceTrackerService.chosenTestCase$.subscribe(testCase => { this.chosenTestCase = testCase});
-    choiceTrackerService.chosenTestRun$.subscribe(testRun => { this.chosenRun = testRun});
+      private bds: BrowseDashboardStateService) { 
+    bds.chosenTestCase$.subscribe(testCase => { this.chosenTestCase = testCase});
+    bds.chosenTestRun$.subscribe(testRun => { this.chosenRun = testRun});
     
     this.testGroupService.testGroups$.subscribe(testGroups => {
       this.groups = testGroups;
@@ -47,13 +47,13 @@ export class BrowseDashboardComponent {
   chooseTestGroupEvent(testGroupName: string) {
     this.chosenGroup = this.groups.find(g => g.name === testGroupName);
     this.testRunNames = this.getTestRunNames(this.chosenGroup)
-    this.choiceTrackerService.chooseTestCase(undefined);
-    this.choiceTrackerService.chooseTestRun(undefined);
+    this.bds.chooseTestCase(undefined);
+    this.bds.chooseTestRun(undefined);
   }
  
   chooseTestRunEvent(testRunName: string) {
     this.chosenRun = this.chosenGroup.testRuns.find(tr => tr.name === testRunName);
-    this.choiceTrackerService.chooseTestCase(undefined);
+    this.bds.chooseTestCase(undefined);
   }
 }
 

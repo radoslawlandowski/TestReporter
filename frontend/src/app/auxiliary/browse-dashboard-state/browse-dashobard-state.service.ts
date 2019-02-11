@@ -6,7 +6,7 @@ import { TestGroup } from '../../test-group/test-group';
 import { TestRun } from '../../test-run/test-run';
 
 @Injectable()
-export class ChoiceTrackerService {
+export class BrowseDashboardStateService {
     private chosenTestCaseSource = new Subject<TestCase>();
     private chosenTestGroupSource = new Subject<TestGroup>();
     private chosenTestRunSource = new Subject<TestRun>();

@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } f
 import { TestSuite } from './test-suite';
 import { TestCaseResult } from '../test-case/test-case-result/test-case-result'
 
-import { ChoiceTrackerService } from '../auxiliary/choice-tracker/choice-tracker.service';
+import { BrowseDashboardStateService } from '../auxiliary/browse-dashboard-state/browse-dashobard-state.service';
 
 @Component({
   selector: 'test-suite',
@@ -16,10 +16,10 @@ export class TestSuiteComponent {
     @Input() testSuite: TestSuite;
     @Input() chosenResult: TestCaseResult;
 
-    constructor(private choiceTrackerService: ChoiceTrackerService) {}
+    constructor(private bds: BrowseDashboardStateService) {}
 
     setCurrentTestCase(testCase): void {
-      this.choiceTrackerService.chooseTestCase(testCase);
+      this.bds.chooseTestCase(testCase);
     }
 
     testResult = TestCaseResult;
