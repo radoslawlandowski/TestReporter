@@ -25,6 +25,7 @@ export class BrowseDashboardComponent {
   constructor(private testGroupService: TestGroupService,
       private choiceTrackerService: ChoiceTrackerService) { 
     choiceTrackerService.chosenTestCase$.subscribe(testCase => { this.chosenTestCase = testCase});
+    choiceTrackerService.chosenTestRun$.subscribe(testRun => { this.chosenRun = testRun});
     
     this.testGroupService.testGroups$.subscribe(testGroups => {
       this.groups = testGroups;
@@ -46,10 +47,13 @@ export class BrowseDashboardComponent {
   chooseTestGroupEvent(testGroupName: string) {
     this.chosenGroup = this.groups.find(g => g.name === testGroupName);
     this.testRunNames = this.getTestRunNames(this.chosenGroup)
+    this.choiceTrackerService.chooseTestCase(undefined);
+    this.choiceTrackerService.chooseTestRun(undefined);
   }
  
   chooseTestRunEvent(testRunName: string) {
     this.chosenRun = this.chosenGroup.testRuns.find(tr => tr.name === testRunName);
+    this.choiceTrackerService.chooseTestCase(undefined);
   }
 }
 
