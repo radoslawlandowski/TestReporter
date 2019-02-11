@@ -7,16 +7,23 @@ import { TestCaseResult } from './test-case-result';
   styleUrls: []
 })
 export class TestCaseResultBadgeComponent {
+    public static baseClass: string = "badge option ";
+    public static resultToCssMap: any = {
+      [TestCaseResult.Any]: TestCaseResultBadgeComponent.baseClass + "badge-primary",
+      [TestCaseResult.Passed]: TestCaseResultBadgeComponent.baseClass + "badge-success",
+      [TestCaseResult.Failed]: TestCaseResultBadgeComponent.baseClass + "badge-danger",
+      [TestCaseResult.Inconclusive]: TestCaseResultBadgeComponent.baseClass + "badge-warning",
+      [TestCaseResult.Skipped]: TestCaseResultBadgeComponent.baseClass + "badge-info",
+    };
+
     _resultName: string = "";
-    baseClass: string = "badge option ";
-    resultToCssMap: Map<string, string>;
     resultClass: string;
     fontSize : string;
 
     @Input()
     set resultName(value: string) {
       this._resultName = value;
-      this.resultClass = this.resultToCssMap.get(value.toLowerCase())
+      this.resultClass = TestCaseResultBadgeComponent.resultToCssMap[value.toLowerCase()];
     };
 
     @Input() 
@@ -25,16 +32,6 @@ export class TestCaseResultBadgeComponent {
     }
 
     constructor() {
-        console.log("TestCaseResultBadgeComponent")
-
-        this.resultToCssMap = new Map<string, string>();
-
-        this.resultToCssMap.set(TestCaseResult.Any, this.baseClass + "badge-primary")
-        this.resultToCssMap.set(TestCaseResult.Passed, this.baseClass + "badge option badge-success")
-        this.resultToCssMap.set(TestCaseResult.Failed, this.baseClass + "badge option badge-danger")
-        this.resultToCssMap.set(TestCaseResult.Inconclusive, this.baseClass + "badge option badge-warning")
-        this.resultToCssMap.set(TestCaseResult.Skipped, this.baseClass + "badge option badge-info")
-    
-        this.resultClass = this.resultToCssMap.get(this.resultName);
+        this.resultClass = TestCaseResultBadgeComponent.resultToCssMap[this.resultName];
     }
 }
