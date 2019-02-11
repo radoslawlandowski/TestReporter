@@ -1,13 +1,14 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { TestGroupService } from '../../test-group/test-group.service'
 import { TestGroup } from '../../test-group/test-group'
 
 @Component({
-    selector: 'add-testgroup',
-    templateUrl: './add-testgroup.component.html',
-  })
+  selector: 'add-testgroup',
+  templateUrl: './add-testgroup.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
   
 export class AddTestgroupComponent {
 

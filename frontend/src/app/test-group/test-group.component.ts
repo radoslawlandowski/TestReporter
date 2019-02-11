@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { TestGroup } from './test-group'
 import { TestRun } from '../test-run/test-run'
@@ -6,7 +6,8 @@ import { TestRun } from '../test-run/test-run'
 @Component({
   selector: 'test-group',
   templateUrl: './test-group.component.html',
-  styleUrls: ['./test-group.component.css']
+  styleUrls: ['./test-group.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TestGroupComponent {

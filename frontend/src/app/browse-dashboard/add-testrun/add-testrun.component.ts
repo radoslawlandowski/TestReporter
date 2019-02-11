@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { TestGroupService } from '../../test-group/test-group.service'
@@ -9,6 +9,7 @@ import { ApiResponse } from '../../auxiliary/model/api-response';
 @Component({
     selector: 'add-testrun',
     templateUrl: './add-testrun.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   
 export class AddTestrunComponent {

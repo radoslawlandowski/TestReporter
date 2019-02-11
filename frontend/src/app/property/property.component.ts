@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Property } from './property';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -17,7 +17,7 @@ export class PropertyComponent implements OnInit {
   imageToShow: any;  
   downloadStatus: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     if(this.isImage()) {
@@ -48,10 +48,11 @@ export class PropertyComponent implements OnInit {
       let reader = new FileReader();
       reader.addEventListener("load", () => {
           this.imageToShow = "data:image/png;base64," + reader.result.split(",")[1];
+          this.cdr.detectChanges();
       }, false);
 
       if (image) {
           reader.readAsDataURL(image);
-      }
+      } 
   }
 }

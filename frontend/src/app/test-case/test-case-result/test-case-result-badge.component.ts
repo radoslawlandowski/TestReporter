@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TestCaseResult } from './test-case-result'; 
 
 @Component({
   selector: 'test-case-result-badge',
   templateUrl: './test-case-result-badge.component.html',
-  styleUrls: []
+  styleUrls: [],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TestCaseResultBadgeComponent {
     public static baseClass: string = "badge option ";

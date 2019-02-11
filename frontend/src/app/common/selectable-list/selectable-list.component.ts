@@ -1,9 +1,10 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'selectable-list',
   templateUrl: './selectable-list.component.html',
-  styleUrls: ['./selectable-list.component.css']
+  styleUrls: ['./selectable-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectableListComponent {
 

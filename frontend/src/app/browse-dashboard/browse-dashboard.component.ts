@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TestCase } from '../test-case/test-case'
 
@@ -22,8 +22,9 @@ export class BrowseDashboardComponent {
   chosenRun: TestRun;
   chosenTestCase: TestCase;
 
-  constructor(private testGroupService: TestGroupService, private choiceTrackerService: ChoiceTrackerService) { 
-    choiceTrackerService.chosenTestCase$.subscribe(testCase => { this.chosenTestCase = testCase; });
+  constructor(private testGroupService: TestGroupService,
+      private choiceTrackerService: ChoiceTrackerService) { 
+    choiceTrackerService.chosenTestCase$.subscribe(testCase => { this.chosenTestCase = testCase});
     
     this.testGroupService.testGroups$.subscribe(testGroups => {
       this.groups = testGroups;
