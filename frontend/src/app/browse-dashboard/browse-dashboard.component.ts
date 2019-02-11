@@ -18,14 +18,12 @@ export class BrowseDashboardComponent {
   groups: TestGroup[] = [];
   groupNames: string[] = [];
   testRunNames: string[] = [];
-  chosenGroup: TestGroup = {id: 1, name: ''};
+  chosenGroup: TestGroup;
   chosenRun: TestRun;
   chosenTestCase: TestCase;
 
   constructor(private testGroupService: TestGroupService, private choiceTrackerService: ChoiceTrackerService) { 
-    choiceTrackerService.chosenTestCase$.subscribe(testCase => {
-        this.chosenTestCase = testCase;
-      });
+    choiceTrackerService.chosenTestCase$.subscribe(testCase => { this.chosenTestCase = testCase; });
     
     this.testGroupService.testGroups$.subscribe(testGroups => {
       this.groups = testGroups;

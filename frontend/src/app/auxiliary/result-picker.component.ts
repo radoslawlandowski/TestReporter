@@ -14,7 +14,6 @@ export class ResultPickerComponent {
     testResult = TestCaseResult;
 
     chooseResults(result : TestCaseResult) {
-        console.log(result);
         this.chosenResult = result;
     }
 }

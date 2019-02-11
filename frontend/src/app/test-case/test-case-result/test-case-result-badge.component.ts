@@ -1,39 +1,40 @@
-import { Component, Input, OnInit, SimpleChanges  } from '@angular/core';
-
-import { TestCase } from '../test-case';
-import { TestCaseResult } from './test-case-result';
+import { Component, Input } from '@angular/core';
+import { TestCaseResult } from './test-case-result'; 
 
 @Component({
   selector: 'test-case-result-badge',
   templateUrl: './test-case-result-badge.component.html',
-  styleUrls: ['./test-case-result-badge.component.css']
+  styleUrls: []
 })
-
 export class TestCaseResultBadgeComponent {
-    @Input() resultName : string;
-    @Input() fontSizePercentage: string;
+    _resultName: string = "";
+    baseClass: string = "badge option ";
+    resultToCssMap: Map<string, string>;
+    resultClass: string;
+    fontSize : string;
 
-    resultToCssMap;
-    resultClass;
-    fontSize;
+    @Input()
+    set resultName(value: string) {
+      this._resultName = value;
+      this.resultClass = this.resultToCssMap.get(value.toLowerCase())
+    };
+
+    @Input() 
+    set fontSizePercentage(value: string) {
+      this.fontSize = value + "%";
+    }
 
     constructor() {
+        console.log("TestCaseResultBadgeComponent")
+
         this.resultToCssMap = new Map<string, string>();
-        
-        this.resultToCssMap.set("all", "badge option badge-primary")
-        this.resultToCssMap.set("passed", "badge option badge-success")
-        this.resultToCssMap.set("failed", "badge option badge-danger")
-        this.resultToCssMap.set("inconclusive", "badge option badge-warning")
-        this.resultToCssMap.set("skipped", "badge option badge-info")
+
+        this.resultToCssMap.set(TestCaseResult.Any, this.baseClass + "badge-primary")
+        this.resultToCssMap.set(TestCaseResult.Passed, this.baseClass + "badge option badge-success")
+        this.resultToCssMap.set(TestCaseResult.Failed, this.baseClass + "badge option badge-danger")
+        this.resultToCssMap.set(TestCaseResult.Inconclusive, this.baseClass + "badge option badge-warning")
+        this.resultToCssMap.set(TestCaseResult.Skipped, this.baseClass + "badge option badge-info")
     
         this.resultClass = this.resultToCssMap.get(this.resultName);
     }
-
-    ngOnInit() {
-        this.fontSize = this.fontSizePercentage + "%";
-    }
-
-    ngOnChanges(changes: SimpleChanges ) {
-        this.resultClass = this.resultToCssMap.get(changes["resultName"].currentValue.toLowerCase())
-      }
 }

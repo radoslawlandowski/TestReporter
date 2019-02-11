@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { TestCase } from './test-case';
-import { TestCaseResult } from './test-case-result/test-case-result';
 
 @Component({
   selector: 'test-case',
@@ -9,12 +8,6 @@ import { TestCaseResult } from './test-case-result/test-case-result';
   styleUrls: ['./test-case.component.css']
 })
 
-export class TestCaseComponent implements OnChanges {
+export class TestCaseComponent {
     @Input() testCase: TestCase;
-
-    testCaseResult = TestCaseResult
-
-    ngOnChanges(changes: SimpleChanges) {
-      this.testCase = changes['testCase'].currentValue;
-    }
-}
+} 

@@ -30,8 +30,7 @@ export class TestGroupService {
 
         return this.http.post(`${environment.apiUrl}/test-groups/${testGroupName}/test-runs`, formData, {headers: headers})
             .pipe(switchMap((testRunId: number) => {
-                return this.fetchTestRunById(testRunId, testGroupName);
-            }), catchError(val => of(`Uploading test run file failed!`)))
+                return this.fetchTestRunById(testRunId, testGroupName)}))
     }
 
     createTestGroup(testGroup: TestGroup) {

@@ -1,15 +1,10 @@
 
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
 import { TestGroupService } from '../../test-group/test-group.service'
 import { TestGroup } from '../../test-group/test-group'
 import { ApiResponse } from '../../auxiliary/model/api-response';
-
-import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'add-testrun',
@@ -32,7 +27,9 @@ export class AddTestrunComponent {
     if(fileList.length > 0) {
         let file: File = fileList[0];
 
-        this.testGroupService.uploadFile(this.testGroup.name, file).subscribe((data) => {this.uploadStatus = "File uploaded!"});
+        this.testGroupService.uploadFile(this.testGroup.name, file).subscribe((data) => {this.uploadStatus = "File uploaded!"}, (data) => {
+          this.uploadStatus = "File upload error!";        
+        });
 
         this.uploadStatus = "The file is being uploaded..."        
     }

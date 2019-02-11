@@ -7,17 +7,18 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 })
 export class SelectableListComponent {
 
-  private chosenName: string = "";
   private _names: string[] = [];
 
   @Input()
   set names(names: string[]) {
     this._names = names;
-    this.chosenName = names[0];
   };
 
+  @Input()
+  chosenName: string = "";
+
   @Output()
-  public chooseName = new EventEmitter<string>()
+  chosenNameChange = new EventEmitter<string>()
 
   constructor() { }
 
@@ -30,10 +31,14 @@ export class SelectableListComponent {
   setName(name: string) : void {
     this.chosenName = name;
 
-    this.chooseName.emit(name);
+    this.chosenNameChange.emit(name);
   }
  
   isListEmpty() : boolean {
     return this._names && this._names.length > 0;
+  }
+
+  trackByFn(index, item) {
+    return index;
   }
 }

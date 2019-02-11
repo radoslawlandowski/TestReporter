@@ -7,10 +7,6 @@ import { Failure } from './failure'
   styleUrls: ['./failure.component.css']
 })
 
-export class FailureComponent implements OnChanges {
+export class FailureComponent {
     @Input() failure: Failure;
-
-    ngOnChanges(changes: SimpleChanges) {
-      this.failure = changes['failure'].currentValue;
-    }
 }

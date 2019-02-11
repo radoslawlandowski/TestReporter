@@ -1,15 +1,8 @@
 
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
-
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 
 import { TestGroupService } from '../../test-group/test-group.service'
 import { TestGroup } from '../../test-group/test-group'
-import { ApiResponse } from '../../auxiliary/model/api-response';
-
-import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'add-testgroup',
@@ -18,13 +11,12 @@ import { environment } from '../../../environments/environment';
   
 export class AddTestgroupComponent {
 
-  public groupName: string;
+  public groupName: string; 
   
-  constructor(private http: HttpClient, private testGroupService: TestGroupService) {
-  }
+  constructor(private testGroupService: TestGroupService) {}
 
   create() {
-    if(this.groupName && this.groupName.length > 2) {
+    if (this.groupName && this.groupName.length > 2) {
       this.testGroupService.createTestGroup(new TestGroup(this.groupName))
     }
   }

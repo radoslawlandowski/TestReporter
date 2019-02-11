@@ -1,5 +1,3 @@
-import 'rxjs/add/operator/switchMap';
-
 import { Component, Input } from '@angular/core';
 
 import { TestGroup } from './test-group'
